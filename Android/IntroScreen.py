@@ -463,7 +463,7 @@ class IntroScreen(unittest.TestCase):
         st1.click()
 
         try:
-            self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 1111 2222']/android.widget.ImageView")
+            self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 2222 1111']/android.widget.ImageView")
             # 요소가 존재한다면, 여기서 예외가 발생하지 않으므로 테스트 실패
             assert False, "인풋 필드에 텍스트가 없는데 X 버튼 출력됨 확인 필요"
         except NoSuchElementException:
@@ -473,8 +473,8 @@ class IntroScreen(unittest.TestCase):
         st2.click()
         st2.send_keys("01022221111")
 
-        self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 1111 2222']/android.widget.ImageView").is_displayed()
-        st3 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 1111 2222']/android.widget.ImageView")
+        self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 2222 1111']/android.widget.ImageView").is_displayed()
+        st3 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 2222 1111']/android.widget.ImageView")
         st3.click()
 
         st4 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ImageView[@content-desc=\"휴대폰 번호\n비밀번호\"]/android.widget.EditText[1]")
@@ -483,7 +483,7 @@ class IntroScreen(unittest.TestCase):
         self.assertEqual("", re)
 
         try:
-            self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 1111 2222']/android.widget.ImageView")
+            self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 2222 1111']/android.widget.ImageView")
             # 요소가 존재한다면, 여기서 예외가 발생하지 않으므로 테스트 실패
             assert False, "인풋 필드에 텍스트가 없는데 X 버튼 출력됨 확인 필요"
         except NoSuchElementException:
@@ -635,7 +635,7 @@ class IntroScreen(unittest.TestCase):
         st7.click()
         st7.send_keys("123456789")
         er7 = st7.text
-        self.assertEqual("123 456 789", er7)
+        self.assertEqual("123456789", er7)
         assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "휴대폰 번호\n올바른 휴대폰 번호를 입력해 주세요.").is_displayed()
         st7.clear()
 
@@ -664,7 +664,7 @@ class IntroScreen(unittest.TestCase):
         st2.click()
 
         try:
-            self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 1111 2222']/android.widget.ImageView")
+            self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 2222 1111']/android.widget.ImageView")
             # 요소가 존재한다면, 여기서 예외가 발생하지 않으므로 테스트 실패
             assert False, "인풋 필드에 텍스트가 없는데 X 버튼 출력됨 확인 필요"
         except NoSuchElementException:
@@ -674,8 +674,8 @@ class IntroScreen(unittest.TestCase):
         st2.click()
         st2.send_keys("01022221111")
 
-        self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 1111 2222']/android.widget.ImageView").is_displayed()
-        st3 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 1111 2222']/android.widget.ImageView")
+        self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 2222 1111']/android.widget.ImageView").is_displayed()
+        st3 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 2222 1111']/android.widget.ImageView")
         st3.click()
 
         st4 = self.driver.find_element(AppiumBy.CLASS_NAME, signUpPhoneNumber)
@@ -845,7 +845,7 @@ class IntroScreen(unittest.TestCase):
         st2.click()
 
         try:
-            self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 1111 2222']/android.widget.ImageView")
+            self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 2222 1111']/android.widget.ImageView")
             # 요소가 존재한다면, 여기서 예외가 발생하지 않으므로 테스트 실패
             assert False, "인풋 필드에 텍스트가 없는데 X 버튼 출력됨 확인 필요"
         except NoSuchElementException:
@@ -855,8 +855,8 @@ class IntroScreen(unittest.TestCase):
         st3.click()
         st3.send_keys("01022221111")
 
-        self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 1111 2222']/android.widget.ImageView").is_displayed()
-        st3 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 1111 2222']/android.widget.ImageView")
+        self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 2222 1111']/android.widget.ImageView").is_displayed()
+        st3 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 2222 1111']/android.widget.ImageView")
         st3.click()
 
         st4 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
@@ -865,7 +865,7 @@ class IntroScreen(unittest.TestCase):
         self.assertEqual("", re)
 
         try:
-            self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 1111 2222']/android.widget.ImageView")
+            self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 2222 1111']/android.widget.ImageView")
             # 요소가 존재한다면, 여기서 예외가 발생하지 않으므로 테스트 실패
             assert False, "인풋 필드에 텍스트가 없는데 X 버튼 출력됨 확인 필요"
         except NoSuchElementException:
@@ -1058,54 +1058,54 @@ class IntroScreen(unittest.TestCase):
 
         print("DQS-T14215 회원가입 인증번호 입력 페이지의 인증번호 인풋 박스 Hint 문구 기능 동작 확인 | Pass")
 
-    # def test_DQS_T14161(self):
-    #     print("DQS_T14161 회원가입 인증번호 입력 페이지의 인증시간 만료 시 기능 동작 확인")
-    #
-    #     st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원가입")
-    #     st1.click()
-    #
-    #     st2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, allAgree)
-    #     st2.click()
-    #
-    #     st3 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, nextBtn)
-    #     st3.click()
-    #
-    #     st4 = self.driver.find_element(AppiumBy.CLASS_NAME, signUpPhoneNumber)
-    #     st4.click()
-    #     st4.send_keys("01078458959")
-    #
-    #     st5 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authenticationBtn)
-    #     st5.click()
-    #
-    #     time.sleep(3)
-    #
-    #     st3 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
-    #     st3.send_keys("123456")
-    #
-    #     time.sleep(360)
-    #
-    #     assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "0분 0초").is_displayed()
-    #
-    #     st6 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증완료")
-    #     st6.click()
-    #
-    #     assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "+82 01078458959").is_displayed()
-    #
-    #     st7 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "재전송")
-    #     st7.click()
-    #
-    #     st3 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
-    #     st3.clear()
-    #     st3.send_keys("111111")
-    #
-    #     st6 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증완료")
-    #     st6.click()
-    #
-    #     assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증 코드 오류").is_displayed()
+    def test_DQS_T14161(self):
+        print("DQS_T14161 회원가입 인증번호 입력 페이지의 인증시간 만료 시 기능 동작 확인")
 
-    #     pass
-    #
-    #     print("DQS_T14161 회원가입 인증번호 입력 페이지의 인증시간 만료 시 기능 동작 확인 | Pass")
+        st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원가입")
+        st1.click()
+
+        st2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, allAgree)
+        st2.click()
+
+        st3 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, nextBtn)
+        st3.click()
+
+        st4 = self.driver.find_element(AppiumBy.CLASS_NAME, signUpPhoneNumber)
+        st4.click()
+        st4.send_keys("01078458959")
+
+        st5 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authenticationBtn)
+        st5.click()
+
+        time.sleep(3)
+
+        st3 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        st3.send_keys("123456")
+
+        time.sleep(360)
+
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "0분 0초").is_displayed()
+
+        st6 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증완료")
+        st6.click()
+
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "+82 01078458959").is_displayed()
+
+        st7 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "재전송")
+        st7.click()
+
+        st3 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        st3.clear()
+        st3.send_keys("111111")
+
+        st6 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증완료")
+        st6.click()
+
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증 코드 오류").is_displayed()
+
+        pass
+
+        print("DQS_T14161 회원가입 인증번호 입력 페이지의 인증시간 만료 시 기능 동작 확인 | Pass")
 
     def test_DQS_T14136(self):
         print("DQS-T14136 로그인 페이지 비밀번호 인풋 박스 Hint 문구 기능 동작 확인")
