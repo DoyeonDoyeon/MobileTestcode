@@ -471,7 +471,7 @@ class IntroScreen(unittest.TestCase):
 
         st2 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ImageView[@content-desc=\"휴대폰 번호\n비밀번호\"]/android.widget.EditText[1]")
         st2.click()
-        st2.send_keys("01011112222")
+        st2.send_keys("01022221111")
 
         self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 1111 2222']/android.widget.ImageView").is_displayed()
         st3 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 1111 2222']/android.widget.ImageView")
@@ -672,7 +672,7 @@ class IntroScreen(unittest.TestCase):
 
         st2 = self.driver.find_element(AppiumBy.CLASS_NAME, signUpPhoneNumber)
         st2.click()
-        st2.send_keys("01011112222")
+        st2.send_keys("01022221111")
 
         self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 1111 2222']/android.widget.ImageView").is_displayed()
         st3 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 1111 2222']/android.widget.ImageView")
@@ -853,7 +853,7 @@ class IntroScreen(unittest.TestCase):
 
         st3 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
         st3.click()
-        st3.send_keys("01011112222")
+        st3.send_keys("01022221111")
 
         self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 1111 2222']/android.widget.ImageView").is_displayed()
         st3 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 1111 2222']/android.widget.ImageView")
@@ -975,7 +975,7 @@ class IntroScreen(unittest.TestCase):
 
         st2 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
         st2.click()
-        st2.send_keys("01011112222")
+        st2.send_keys("01022221111")
 
         st3 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증요청")
         st3.click()
@@ -1082,7 +1082,7 @@ class IntroScreen(unittest.TestCase):
     #     st3 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
     #     st3.send_keys("123456")
     #
-    #     time.sleep(185)
+    #     time.sleep(360)
     #
     #     assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "0분 0초").is_displayed()
     #
@@ -1172,7 +1172,7 @@ class IntroScreen(unittest.TestCase):
 
         st2 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
         st2.click()
-        st2.send_keys("01011112222")
+        st2.send_keys("01022221111")
 
         st3 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증요청")
         st3.click()
@@ -1240,7 +1240,7 @@ class IntroScreen(unittest.TestCase):
 
         st2 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
         st2.click()
-        st2.send_keys("01011112222")
+        st2.send_keys("01022221111")
 
         st3 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증요청")
         st3.click()
@@ -1252,23 +1252,38 @@ class IntroScreen(unittest.TestCase):
         st3.click()
         st3.send_keys("1")
 
-        assert self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='1']/android.widget.ImageView").is_displayed()
+        assert self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='1']").is_displayed()
 
-        st5 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='1']/android.widget.ImageView")
-        st5.click()
+        st5 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        st5.clear()
 
-        assert self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText").is_displayed()
-
-
-        print("DQS-T14158 비밀번호 찾기 인증번호 입력 페이지의 인증번호 인풋 박스 Hint 문구 기능 동작 확인 | Pass")
+        assert self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText").is_displayed()
 
         print("DQS-T14160 비밀번호 찾기 인증번호 입력 페이지의 인증시간 만료 시 기능 동작 확인 + 재전송 기능!!!")
 
+        time.sleep(180)
+        print("3분 대기중.......................")
 
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "0분 0초").is_displayed()
 
-        print("DQS-T14160 비밀번호 찾기 인증번호 입력 페이지의 인증시간 만료 시 기능 동작 확인 + 재전송 기능!!! | Pass")
+        st6 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증완료")
+        st6.click()
 
+        st7 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "재전송")
+        st7.click()
 
+        ID_check = ["2분 29초", "2분 28초", "2분 27초", "2분 26초"]
+
+        element_found = False
+        for id in ID_check:
+            elements = self.driver.find_elements(AppiumBy.ACCESSIBILITY_ID, id)
+            if len(elements) > 0:
+                element_found = True
+                break
+
+        self.assertTrue(element_found, "None of the specified elements were found")
+
+        pass
 
 if __name__ == '__main__':
     unittest.main()
