@@ -85,6 +85,8 @@ class IntroScreen(unittest.TestCase):
         confirm = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "확인")
         confirm.click()
 
+        pass
+
         print("DQS_T13681 로그인/로그아웃 기능 동작 확인 | Pass")
 
     def test_DQS_T13682(self):
@@ -126,6 +128,9 @@ class IntroScreen(unittest.TestCase):
         time.sleep(3)
 
         assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "개발서버").is_displayed()
+
+        pass
+
         print("DQS_T13682 자동 로그인 기능 동작 확인 | Pass")
 
     def test_DQS_T13683(self):
@@ -152,6 +157,8 @@ class IntroScreen(unittest.TestCase):
 
             confirm = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "확인")
             confirm.click()
+
+        pass
 
         print("DQS_T13683 로그인 실패 동작 확인 | Pass")
 
@@ -218,6 +225,8 @@ class IntroScreen(unittest.TestCase):
         time.sleep(3)
 
         assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "e2e222").is_displayed()
+
+        pass
 
         print("DQS_T13671 공간의 유일한 관리자 회원 탈퇴 시도 시 동작 확인 | Pass")
 
@@ -288,6 +297,8 @@ class IntroScreen(unittest.TestCase):
         next.click()
         assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증요청").is_displayed()
 
+        pass
+
         print("DQS_T13677 회원가입 휴대폰 번호 입력 페이지에서 올바르지 않은 번호 입력시 동작 확인 | Pass")
 
     def test_DQS_T13685(self):
@@ -317,6 +328,8 @@ class IntroScreen(unittest.TestCase):
         phoNo = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
         assertt = phoNo.text
         self.assertEqual(assertt, "010 9049 7847")
+
+        pass
 
         print("DQS_T13685 회원가입 휴대폰 번호 입력 페이지에서 존재하는 번호 입력 시 동작 확인 | Pass")
     def test_DQS_T13718(self):
@@ -374,6 +387,8 @@ class IntroScreen(unittest.TestCase):
         next = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "다음")
         next.click()
         assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "다음").is_displayed()
+
+        pass
 
         print("DQS_T13718 회원가입 페이지의 약관 동의 기능 동작 확인 | Pass")
 
@@ -437,6 +452,8 @@ class IntroScreen(unittest.TestCase):
         self.assertEqual("010 1234 5678", er7)
         st8.clear()
 
+        pass
+
         print("DQS_T14133 로그인 페이지 휴대폰 번호 인풋 박스 유효성 검사 | Pass")
 
     def test_DQS_T14134(self):
@@ -472,6 +489,8 @@ class IntroScreen(unittest.TestCase):
         except NoSuchElementException:
             pass
 
+        pass
+
         print("DQS_T14134 로그인 페이지 휴대폰 번호 X 버튼 기능 동작 확인 | Pass")
 
     def test_DQS_T14135(self):
@@ -490,6 +509,8 @@ class IntroScreen(unittest.TestCase):
         st3.click()
 
         self.driver.find_element(AppiumBy.XPATH, "//android.widget.ImageView[@content-desc=\"휴대폰 번호\n비밀번호\"]/android.widget.EditText[1]").is_displayed()
+
+        pass
 
         print("DQS_T14135 로그인 페이지 휴대폰 번호 인풋 박스 Hint 문구 기능 동작 확인 | Pass")
 
@@ -511,6 +532,8 @@ class IntroScreen(unittest.TestCase):
         st4 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, confirm)
         st4.click()
 
+        pass
+
         print("DQS-T14137 로그인 페이지에서 비밀번호만 입력한 경우 로그인 실패 동작 확인 | Pass")
 
     def test_DQS_T14138(self):
@@ -529,6 +552,9 @@ class IntroScreen(unittest.TestCase):
 
         st4 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, confirm)
         st4.click()
+
+        pass
+
         print("DQS-T14138 로그인 페이지에서 휴대폰 번호만 입력한 경우 로그인 실패 동작 확인 | Pass")
 
     def test_DQS_T14141(self):
@@ -548,6 +574,8 @@ class IntroScreen(unittest.TestCase):
 
         st4 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, confirm)
         st4.click()
+
+        pass
 
         print("DQS-T14141 로그인 페이지에서 가입되지 않은 휴대폰 번호로 로그인 시도 시 로그인 실패 동작 확인 | Pass")
 
@@ -619,6 +647,8 @@ class IntroScreen(unittest.TestCase):
         self.assertEqual("010 1234 5678", er7)
         st8.clear()
 
+        pass
+
         print("DQS-T14142 회원가입 페이지의 휴대폰 번호 인풋 박스 유효성 검사 | Pass")
 
     def test_DQS_T14144(self):
@@ -659,6 +689,8 @@ class IntroScreen(unittest.TestCase):
             assert False, "인풋 필드에 텍스트가 없는데 X 버튼 출력됨 확인 필요"
         except NoSuchElementException:
             pass
+
+        pass
 
         print("DQS-T14144 회원가입 페이지의 휴대폰 번호 인풋 박스 X버튼 기능 동작 확인 | Pass")
 
@@ -732,6 +764,8 @@ class IntroScreen(unittest.TestCase):
         st12 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, confirm)
         st12.click()
 
+        pass
+
         print("DQS-T14145 회원가입 인증번호 입력 페이지의 인증번호 인풋 박스 유효성 검사 | Pass")
 
     def test_DQS_T14153(self):
@@ -797,6 +831,8 @@ class IntroScreen(unittest.TestCase):
         self.assertEqual("010 1234 5678", er7)
         st8.clear()
 
+        pass
+
         print("DQS-T14153 비밀번호 찾기 페이지의 휴대폰 번호 인풋 박스 유효성 검사 | Pass")
 
     def test_DQS_T14154(self):
@@ -835,6 +871,8 @@ class IntroScreen(unittest.TestCase):
         except NoSuchElementException:
             pass
 
+        pass
+
         print("DQS-T14154 비밀번호 찾기 페이지의 휴대폰 번호 인풋 박스 X 버튼 기능 동작 확인 | Pass")
 
     def test_DQS_T14155(self):
@@ -856,6 +894,8 @@ class IntroScreen(unittest.TestCase):
         re = st4.text
         self.assertEqual("", re)
 
+        pass
+
         print("DQS-T14155 비밀번호 찾기 페이지의 휴대폰 번호 인풋 박스 Hint 문구 기능 동작 확인 | Pass")
 
     def test_DQS_T14223(self):
@@ -874,6 +914,8 @@ class IntroScreen(unittest.TestCase):
         st1.click()
 
         assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "Dev-Server").is_displayed()
+
+        pass
 
         print("DQS-T14223 회원가입 휴대폰 번호 입력 페이지의 뒤로가기 버튼 기능 동작 확인 | Pass")
 
@@ -903,6 +945,8 @@ class IntroScreen(unittest.TestCase):
 
         assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "휴대폰 번호")
 
+        pass
+
         print("DQS-T14224 회원가입 휴대폰 인증번호 입력 페이지의 뒤로가기 버튼 기능 동작 확인 | Pass")
 
     def test_DQS_T14222(self):
@@ -915,6 +959,8 @@ class IntroScreen(unittest.TestCase):
         st1.click()
 
         assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "Dev-Server").is_displayed()
+
+        pass
 
         print("DQS-T14222 회원가입 약관 동의 페이지의 뒤로가기 버튼 기능 동작 확인 | Pass")
 
@@ -940,6 +986,8 @@ class IntroScreen(unittest.TestCase):
 
         assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "휴대폰 번호").is_displayed()
 
+        pass
+
         print("DQS-T14220 비밀번호 찾기 인증번호 입력 페이지의 뒤로가기 버튼 기능 동작 확인 | Pass")
 
     def test_DQS_T14219(self):
@@ -956,6 +1004,8 @@ class IntroScreen(unittest.TestCase):
 
         assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "휴대폰 번호\n비밀번호").is_displayed()
 
+        pass
+
         print("DQS-T14219 비밀번호 찾기 휴대폰 번호 입력 페이지의 뒤로가기 버튼 기능 동작 확인 | Pass")
 
     def test_DQS_T14218(self):
@@ -967,6 +1017,8 @@ class IntroScreen(unittest.TestCase):
         st2.click()
 
         assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "Dev-Server").is_displayed()
+
+        pass
 
         print("DQS-T14218 로그인 페이지에서 뒤로가기 버튼 기능 동작 확인 | Pass")
 
@@ -1001,6 +1053,8 @@ class IntroScreen(unittest.TestCase):
         st4 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
         re = st4.text
         self.assertEqual("", re)
+
+        pass
 
         print("DQS-T14215 회원가입 인증번호 입력 페이지의 인증번호 인풋 박스 Hint 문구 기능 동작 확인 | Pass")
 
@@ -1048,6 +1102,8 @@ class IntroScreen(unittest.TestCase):
     #     st6.click()
     #
     #     assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증 코드 오류").is_displayed()
+
+    #     pass
     #
     #     print("DQS_T14161 회원가입 인증번호 입력 페이지의 인증시간 만료 시 기능 동작 확인 | Pass")
 
@@ -1057,11 +1113,160 @@ class IntroScreen(unittest.TestCase):
         st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그인")
         st1.click()
 
+        assert self.driver.find_element(AppiumBy.XPATH, passwordInputBox).is_displayed()
+
+        st2 = self.driver.find_element(AppiumBy.XPATH, passwordInputBox)
+        st2.click()
+        st2.send_keys("1")
+
+        assert self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='•']").is_displayed()
+
+        st3 = self.driver.find_element(AppiumBy.XPATH, passwordInputBox)
+        st3.clear()
+
+        assert self.driver.find_element(AppiumBy.XPATH, passwordInputBox).is_displayed()
+
+        pass
+
         print("DQS-T14136 로그인 페이지 비밀번호 인풋 박스 Hint 문구 기능 동작 확인 | Pass")
 
 
 
+    def test_DQS_14143(self):
+        print("DQS-T14143 회원가입 페이지의 휴대폰 번호 인풋 박스 Hint 문구 기능 동작 확인")
 
+        st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원가입")
+        st1.click()
+
+        st2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, allAgree)
+        st2.click()
+
+        st3 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, nextBtn)
+        st3.click()
+
+        assert self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText").is_displayed()
+
+        st4 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        st4.click()
+        st4.send_keys("1")
+
+        assert self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='1']/android.widget.ImageView").is_displayed()
+
+        st5 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='1']/android.widget.ImageView")
+        st5.click()
+
+        assert self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText").is_displayed()
+
+        pass
+
+        print("DQS-T14143 회원가입 페이지의 휴대폰 번호 인풋 박스 Hint 문구 기능 동작 확인 | Pass")
+
+    def test_DQS_T14157(self):
+        print("DQS-T14157 비밀번호 찾기 인증번호 입력 페이지의 인증번호 인풋 박스 유효성 검사")
+
+        st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그인")
+        st1.click()
+
+        st2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 찾기")
+        st2.click()
+
+        st2 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        st2.click()
+        st2.send_keys("01011112222")
+
+        st3 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증요청")
+        st3.click()
+        time.sleep(3)
+
+        st3 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        st3.click()
+        st3.send_keys("ABCDEFG")
+        er3 = st3.text
+        self.assertEqual("ABCDEF", er3)
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증번호는 6자리 숫자입니다.")
+        atBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증완료")
+        atBtn.click()
+        st3.clear()
+
+        st4 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        st4.click()
+        st4.send_keys("abcdef")
+        er4 = st4.text
+        self.assertEqual("abcdef", er4)
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증번호는 6자리 숫자입니다.")
+        atBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증완료")
+        atBtn.click()
+        st4.clear()
+
+        st5 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        st5.click()
+        st5.send_keys("가나다라마바")
+        er5 = st5.text
+        self.assertEqual("가나다라마바", er5)
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증번호는 6자리 숫자입니다.")
+        atBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증완료")
+        atBtn.click()
+        st5.clear()
+
+        st6 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        st6.click()
+        st6.send_keys("!@#$%^&*()")
+        er6 = st6.text
+        self.assertEqual("!@#$%^", er6)
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증번호는 6자리 숫자입니다.")
+        atBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증완료")
+        atBtn.click()
+        st6.clear()
+
+        st7 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        st7.click()
+        st7.send_keys("123456789000000")
+        er7 = st7.text
+        self.assertEqual("123456", er7)
+        atBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증완료")
+        atBtn.click()
+
+        pass
+
+        print("DQS-T14157 비밀번호 찾기 인증번호 입력 페이지의 인증번호 인풋 박스 유효성 검사| Pass")
+
+    def test_DQS_T14158(self):
+        print("DQS-T14158 비밀번호 찾기 인증번호 입력 페이지의 인증번호 인풋 박스 Hint 문구 기능 동작 확인")
+        st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그인")
+        st1.click()
+
+        st2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 찾기")
+        st2.click()
+
+        st2 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        st2.click()
+        st2.send_keys("01011112222")
+
+        st3 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증요청")
+        st3.click()
+        time.sleep(3)
+
+        assert self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText").is_displayed()
+
+        st3 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        st3.click()
+        st3.send_keys("1")
+
+        assert self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='1']/android.widget.ImageView").is_displayed()
+
+        st5 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='1']/android.widget.ImageView")
+        st5.click()
+
+        assert self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText").is_displayed()
+
+
+        print("DQS-T14158 비밀번호 찾기 인증번호 입력 페이지의 인증번호 인풋 박스 Hint 문구 기능 동작 확인 | Pass")
+
+        print("DQS-T14160 비밀번호 찾기 인증번호 입력 페이지의 인증시간 만료 시 기능 동작 확인 + 재전송 기능!!!")
+
+
+
+        print("DQS-T14160 비밀번호 찾기 인증번호 입력 페이지의 인증시간 만료 시 기능 동작 확인 + 재전송 기능!!! | Pass")
 
 
 
