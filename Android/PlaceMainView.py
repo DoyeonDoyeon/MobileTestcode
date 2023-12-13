@@ -8,6 +8,11 @@ from appium.options.android import UiAutomator2Options
 from selenium.common import NoSuchElementException
 from selenium.webdriver.common.action_chains import ActionChains
 
+
+'Xpath'
+leadBtn = "//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.widget.ImageView"
+
+
 class SideMenu(unittest.TestCase):
 
     def setUp(self):
@@ -295,6 +300,53 @@ class SideMenu(unittest.TestCase):
 
         print("DQS_T13734 고객센터 전화상담 기능 동작 확인 | Pass")
 
+    def test_DQS_T14226(self):
+        print("DQS-T14226 설정 페이지에서 뒤로가기 버튼 기능 동작 확인")
+
+        st1 = self.driver.find_element(AppiumBy.XPATH, leadBtn)
+        st1.click()
+
+        st2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "설정")
+        st2.click()
+
+        st3 = self.driver.find_element(AppiumBy.XPATH, leadBtn)
+        st3.click()
+
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그아웃").is_displayed()
+
+        print("DQS-T14226 설정 페이지에서 뒤로가기 버튼 기능 동작 확인 | Pass")
+
+    def test_DQS_T14227(self):
+        print("DQS-T14227 내 계정 페이지의 뒤로가기 버튼 기능 동작 확인")
+
+        st1 = self.driver.find_element(AppiumBy.XPATH, leadBtn)
+        st1.click()
+
+        st2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "e2e_1\n#01090497847")
+        st2.click()
+
+        st3 = self.driver.find_element(AppiumBy.XPATH, leadBtn)
+        st3.click()
+
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그아웃").is_displayed()
+
+        print("DQS-T14227 내 계정 페이지의 뒤로가기 버튼 기능 동작 확인 | Pass")
+
+    def test_DQS_T14228(self):
+        print("DQS-T14228 고객센터 페이지의 뒤로가기 버튼 기능 동작 확인")
+
+        st1 = self.driver.find_element(AppiumBy.XPATH, leadBtn)
+        st1.click()
+
+        st2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "고객센터")
+        st2.click()
+
+        st3 = self.driver.find_element(AppiumBy.XPATH, leadBtn)
+        st3.click()
+
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "잠금\n도연 책상 xs2").is_displayed()
+
+        print("DQS-T14228 고객센터 페이지의 뒤로가기 버튼 기능 동작 확인 | Pass")
     def test_DQS_T13735(self):
         print("DQS_T13735 고객센터 페이지의 이용약관 동작 확인")
 
@@ -719,36 +771,27 @@ class AC(unittest.TestCase):
         end_x = 848
         end_y = 1600
         self.driver.swipe(start_x, start_y, end_x, end_y)
-
         assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "잠금\n도연 책상 xs2").is_displayed()
 
         start_x1 = 848
         start_y1 = 1600
         end_x1 = 274
         end_y1 = 1600
-        self.driver.swipe(start_x1, start_y1, end_x1, end_y1)
-        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "열림\n스케줄 열림\n경재현책상위").is_displayed()
 
         self.driver.swipe(start_x1, start_y1, end_x1, end_y1)
         assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "잠금\n도연 책상 bs3").is_displayed()
 
         self.driver.swipe(start_x1, start_y1, end_x1, end_y1)
-        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "잠금\n수동 잠금\ne2e_test").is_displayed()
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "잠금\n수동 잠금\ne2e_연결끊김테스트").is_displayed()
 
         self.driver.swipe(start_x1, start_y1, end_x1, end_y1)
-        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "잠금\ntest2").is_displayed()
-
-        self.driver.swipe(start_x1, start_y1, end_x1, end_y1)
-        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "잠금\ntest2").is_displayed()
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "잠금\n1_e2e_연결끊김테스트").is_displayed()
 
         self.driver.swipe(start_x, start_y, end_x, end_y)
-        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "잠금\n수동 잠금\ne2e_test").is_displayed()
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "잠금\n수동 잠금\ne2e_연결끊김테스트").is_displayed()
 
         self.driver.swipe(start_x, start_y, end_x, end_y)
         assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "잠금\n도연 책상 bs3").is_displayed()
-
-        self.driver.swipe(start_x, start_y, end_x, end_y)
-        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "열림\n스케줄 열림\n경재현책상위").is_displayed()
 
         self.driver.swipe(start_x, start_y, end_x, end_y)
         assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "잠금\n도연 책상 xs2").is_displayed()
@@ -1007,6 +1050,177 @@ class AC(unittest.TestCase):
         assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "도연 책상 bs3\n잠금  ").is_displayed()
 
         print("DQS_T14083 출입문 Grid 리스트 에서 출입문 선택 시 동작 확인 | Pass")
+
+class Video(unittest.TestCase):
+    def setUp(self):
+        options = UiAutomator2Options()
+        options.platform_name = 'Android'
+        options.device_name = 'R39M30571MZ'
+        options.app_package = 'com.suprema.moon'
+        options.app_activity = 'com.suprema.moon.MainActivity'
+        options.automation_name = 'UiAutomator2'
+        options.auto_grant_permissions = True
+
+        self.driver = webdriver.Remote("http://localhost:4723/wd/hub", options=options)
+        self.driver.implicitly_wait(10)
+
+        login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그인")
+        login_button.click()
+
+        phone_input_box = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ImageView[@content-desc=\"휴대폰 번호\n비밀번호\"]/android.widget.EditText[1]")
+        phone_input_box.click()
+        phone_input_box.send_keys("01090497847")
+
+        password_input_box = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ImageView[@content-desc=\"휴대폰 번호\n비밀번호\"]/android.widget.EditText[2]")
+        password_input_box.click()
+        password_input_box.send_keys("Rlaehdus100!")
+
+        login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그인")
+        login_button.click()
+        time.sleep(10)
+
+        place = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "개발서버")
+        place.click()
+        time.sleep(10)
+
+        self.driver.tap([(786, 649)])
+        time.sleep(5)
+
+    def tearDown(self):
+        for method, error in self._outcome.errors:
+            if error:
+                time_stamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+                file_name = os.path.join("screenshots", f"screenshot_{time_stamp}.png")
+                self.driver.save_screenshot(file_name)
+        self.driver.quit()
+
+    def test_DQS_T14028(self):
+        print("DQS-T14028 비디오 최대화/최소화 버튼 기능 동작 확인")
+
+        self.driver.tap([(1010, 1117)])
+        time.sleep(1)
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "app_e2e_test").is_displayed()
+
+        self.driver.tap([(67, 1997)])
+        time.sleep(1)
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "공간 설정").is_displayed()
+
+        pass
+        print("DQS-T14028 비디오 최대화/최소화 버튼 기능 동작 확인 | Pass")
+
+    def test_DQS_T14029(self):
+        print("DQS-T14029 비디오명 변경 기능 동작 확인")
+
+        self.driver.tap([(1010, 529)])
+
+        st1 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        st1.click()
+        st1.send_keys("Test1")
+
+        st2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "수정")
+        st2.click()
+
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "변경이 완료 되었습니다.")
+
+        st3 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "확인")
+        st3.click()
+
+        self.driver.tap([(540, 2039)])
+        time.sleep(3)
+
+        st4 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "30 개 필터 선택")
+        st4.click()
+
+        st5 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "카메라\n16")
+        st5.click()
+
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "Test1")
+        time.sleep(3)
+
+        self.driver.tap([(69, 174)])
+        time.sleep(1)
+
+        self.driver.tap([(69, 174)])
+        time.sleep(3)
+
+        self.driver.tap([(1010, 529)])
+
+        st1 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        st1.click()
+        st1.send_keys("CAM-1")
+
+        st2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "수정")
+        st2.click()
+
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "변경이 완료 되었습니다.")
+
+        st3 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "확인")
+        st3.click()
+
+        print("DQS-T14029 비디오명 변경 기능 동작 확인 | Pass")
+
+    def test_DQS_T14030(self):
+        print("DQS-T14030 비디오 멀티뷰에서 특정 비디오 선택 시 동작 확인")
+
+        st1 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='영상\n실시간\n출입문']/android.view.View[3]")
+        st1.click()
+        time.sleep(1)
+
+        self.driver.tap([(256, 657)])
+        time.sleep(1)
+
+        st2 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='영상\n실시간\n출입문']/android.view.View[3]")
+        st2.click()
+        time.sleep(1)
+
+        st3 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "3")
+        st3.click()
+        time.sleep(1)
+
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "3").is_displayed()
+
+        st4 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='영상\n실시간\n출입문']/android.view.View[3]")
+        st4.click()
+
+        st5 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "CAM-4")
+        st5.click()
+        time.sleep(1)
+
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "CAM-4").is_displayed()
+
+
+        print("DQS-T14030 비디오 멀티뷰에서 특정 비디오 선택 시 동작 확인 | Pass")
+
+    def test_DQS_T14027(self):
+        print("DQS-T14027 비디오 뷰 변경 버튼 기능 동작 확인")
+
+        st1 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='영상\n실시간\n출입문']/android.view.View[3]")
+        st1.click()
+        time.sleep(1)
+
+        self.driver.tap([(256, 657)])
+        time.sleep(1)
+
+        st2 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='영상\n실시간\n출입문']/android.view.View[3]")
+        st2.click()
+        time.sleep(1)
+
+        st3 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "3")
+        st3.click()
+        time.sleep(1)
+
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "3").is_displayed()
+
+        st4 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='영상\n실시간\n출입문']/android.view.View[3]")
+        st4.click()
+
+        st5 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "CAM-4")
+        st5.click()
+        time.sleep(1)
+
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "CAM-4").is_displayed()
+
+        print("DQS-T14027 비디오 뷰 변경 버튼 기능 동작 확인 | Pass")
 
 if __name__ == '__main__':
     unittest.main()
