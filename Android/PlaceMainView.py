@@ -1051,6 +1051,416 @@ class AC(unittest.TestCase):
 
         print("DQS_T14083 출입문 Grid 리스트 에서 출입문 선택 시 동작 확인 | Pass")
 
+    def test_DQS_T14084(self):
+        print("DQS-T14084 출입문 리스트 변경 버튼 기능 동작 확인")
+
+        st2 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='영상\n실시간\n출입문']/android.view.View[4]")
+        st2.click()
+
+        time.sleep(1)
+
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "도연 책상 xs2\n잠금  ").is_displayed()
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "도연 책상 bs3\n잠금  ").is_displayed()
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "e2e_연결끊김테스트\n잠금 | 수동 잠금").is_displayed()
+
+        st3 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='영상\n실시간\n출입문']/android.view.View[4]")
+        st3.click()
+
+        time.sleep(1)
+
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "도연 책상 xs2\n잠금").is_displayed()
+
+
+        print("DQS-T14084 출입문 리스트 변경 버튼 기능 동작 확인 | Pass")
+
+    def test_DQS_T14085(self):
+        print("DQS-T14085 출입문 리스트 뷰에서 출입문 선택 시 기능 동작 확인")
+
+        st2 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='영상\n실시간\n출입문']/android.view.View[4]")
+        st2.click()
+
+        st3 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "도연 책상 xs2\n잠금  ")
+        st3.click()
+
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "도연 책상 xs2").is_displayed()
+
+        self.driver.tap([(601, 767)])
+
+        st4 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "도연 책상 bs3\n잠금  ")
+        st4.click()
+
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "도연 책상 bs3").is_displayed()
+
+        self.driver.tap([(601, 767)])
+        time.sleep(1)
+
+        st5 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "e2e_연결끊김테스트\n잠금 | 수동 잠금")
+        st5.click()
+
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "e2e_연결끊김테스트").is_displayed()
+
+        self.driver.tap([(601, 767)])
+        time.sleep(1)
+
+        st2 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='영상\n실시간\n출입문']/android.view.View[4]")
+        st2.click()
+
+        print("DQS-T14085 출입문 리스트 뷰에서 출입문 선택 시 기능 동작 확인 | Pass")
+
+    def test_DQS_T14086(self):
+        print("DQS-T14086 출입문 리스트 뷰 스와이프 시 기능 동작 확인")
+
+        st2 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='영상\n실시간\n출입문']/android.view.View[4]")
+        st2.click()
+
+        max_swipes = 20
+        start_x = 503
+        start_y = 1804
+        end_x = 503
+        end_y = 1804-100
+
+        for _ in range(max_swipes):
+            try:
+                element = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "1_e2e_연결끊김테스트\n잠금  ")
+                if element.is_displayed():
+                    break
+            except NoSuchElementException:
+                self.driver.swipe(start_x, start_y, end_x, end_y)
+        else:
+            raise NoSuchElementException("찾을 수 없습니다.")
+
+        time.sleep(3)
+
+        max_swipes = 20
+        start_x = 503
+        start_y = 1804-100
+        end_x = 503
+        end_y = 1804
+
+        for _ in range(max_swipes):
+            try:
+                element = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "도연 책상 xs2\n잠금  ")
+                if element.is_displayed():
+                    break
+            except NoSuchElementException:
+                self.driver.swipe(start_x, start_y, end_x, end_y)
+        else:
+            raise NoSuchElementException("찾을 수 없습니다.")
+
+
+        st2 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='영상\n실시간\n출입문']/android.view.View[4]")
+        st2.click()
+
+        pass
+
+        print("DQS-T14086 출입문 리스트 뷰 스와이프 시 기능 동작 확인 | Pass")
+
+    def test_DQS_T14164(self):
+        print("DQS-T14164 출입문 스케줄 열림/잠금 스케줄 이 중복되는 시간의 스케줄 설정 시도 시 동작 확인")
+
+        st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "잠금\n도연 책상 xs2")
+        st1.click()
+
+        time.sleep(1)
+
+        st2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "도연 책상 xs2")
+        st2.click()
+
+        time.sleep(1)
+
+        st3 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "스케줄 열림\n없음")
+        st3.click()
+
+        st4 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "e2e스케쥴")
+        st4.click()
+
+        time.sleep(5)
+
+        self.driver.tap([(60, 190)])
+
+        st5 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "스케줄 잠금\n없음")
+        st5.click()
+
+        time.sleep(1)
+
+        st6 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "e2e스케쥴")
+        st6.click()
+
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "지원 하지 않음")
+
+        st7 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "확인")
+        st7.click()
+
+        self.driver.tap([(60, 190)])
+
+        st8 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "스케줄 열림\ne2e스케쥴")
+        st8.click()
+
+        st9 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "없음")
+        st9.click()
+
+        time.sleep(5)
+
+        pass
+
+        print("DQS-T14164 출입문 스케줄 열림/잠금 스케줄 이 중복되는 시간의 스케줄 설정 시도 시 동작 확인 | Pass")
+
+    def test_DQS_T14209(self):
+        print("DQS-T14209 출입문 설정 페이지의 뒤로가기 버튼 기능 동작 확인")
+
+        st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "잠금\n도연 책상 xs2")
+        st1.click()
+
+        time.sleep(1)
+
+        st2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "도연 책상 xs2")
+        st2.click()
+
+        self.driver.tap([(60, 190)])
+
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "도연 책상 xs2").is_displayed()
+
+        print("DQS-T14209 출입문 설정 페이지의 뒤로가기 버튼 기능 동작 확인 | Pass")
+
+    def test_DQS_T14210(self):
+        print("DQS-T14210 출입문 설정 페이지의 출입문명 인풋 박스 유효성 검사")
+        door = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "잠금\n도연 책상 xs2")
+        door.click()
+
+        setting = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "도연 책상 xs2")
+        setting.click()
+
+        dnIB = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        dnIB.click()
+        dnIB.send_keys("Ab")
+
+        dnIB1 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText").text
+        print(dnIB1)
+        self.assertEqual(dnIB1, "Ab")
+
+        dnIB = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        dnIB.clear()
+
+        dnIB = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        dnIB.click()
+        dnIB.send_keys("12")
+
+        dnIB1 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText").text
+        print(dnIB1)
+        self.assertEqual(dnIB1, "12")
+
+        dnIB = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        dnIB.clear()
+
+        dnIB = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        dnIB.click()
+        dnIB.send_keys("가나")
+
+        dnIB1 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText").text
+        print(dnIB1)
+        self.assertEqual(dnIB1, "가나")
+
+        dnIB = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        dnIB.clear()
+
+        dnIB = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        dnIB.click()
+        dnIB.send_keys("- _")
+
+        dnIB1 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText").text
+        print(dnIB1)
+        self.assertEqual(dnIB1, "- _")
+
+        dnIB = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        dnIB.clear()
+
+        dnIB = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        dnIB.click()
+        dnIB.send_keys("!@#$%^&*()")
+
+        dnIB1 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText").text
+        print(dnIB1)
+        self.assertEqual(dnIB1, "!@#$%^&*()")
+
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "공백,-,_, 외의 특수문자는 사용할 수 없습니다.").is_displayed()
+
+        dnIB = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        dnIB.clear()
+
+        dnIB = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        dnIB.click()
+        dnIB.send_keys("Ab1")
+
+        dnIB1 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText").text
+        print(dnIB1)
+        self.assertEqual(dnIB1, "Ab1")
+
+        dnIB = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        dnIB.clear()
+
+        dnIB = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        dnIB.click()
+        dnIB.send_keys("Ab가")
+
+        dnIB1 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText").text
+        print(dnIB1)
+        self.assertEqual(dnIB1, "Ab가")
+
+        dnIB = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        dnIB.clear()
+
+        dnIB = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        dnIB.click()
+        dnIB.send_keys("Ab - _")
+
+        dnIB1 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText").text
+        print(dnIB1)
+        self.assertEqual(dnIB1, "Ab - _")
+
+        dnIB = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        dnIB.clear()
+
+        dnIB = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        dnIB.click()
+        dnIB.send_keys("Ab!")
+
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "공백,-,_, 외의 특수문자는 사용할 수 없습니다.").is_displayed()
+
+        dnIB1 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText").text
+        print(dnIB1)
+        self.assertEqual(dnIB1, "Ab!")
+
+        dnIB = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        dnIB.clear()
+
+        dnIB = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        dnIB.click()
+        dnIB.send_keys("1가")
+
+        dnIB1 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText").text
+        print(dnIB1)
+        self.assertEqual(dnIB1, "1가")
+
+        dnIB = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        dnIB.clear()
+
+        dnIB = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        dnIB.click()
+        dnIB.send_keys("1 - _")
+
+        dnIB1 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText").text
+        print(dnIB1)
+        self.assertEqual(dnIB1, "1 - _")
+
+        dnIB = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        dnIB.clear()
+
+        dnIB = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        dnIB.click()
+        dnIB.send_keys("가 - _")
+
+        dnIB1 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText").text
+        print(dnIB1)
+        self.assertEqual(dnIB1, "가 - _")
+
+        dnIB = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        dnIB.clear()
+
+        dnIB = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        dnIB.click()
+        dnIB.send_keys("가!@#$%^&*()")
+
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "공백,-,_, 외의 특수문자는 사용할 수 없습니다.").is_displayed()
+
+        dnIB1 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText").text
+        print(dnIB1)
+        self.assertEqual(dnIB1, "가!@#$%^&*()")
+
+        dnIB = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        dnIB.clear()
+
+        dnIB = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        dnIB.click()
+        dnIB.send_keys("ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789012345678901234567890123456789012345678901234567890123456")
+
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "공백,-,_, 외의 특수문자는 사용할 수 없습니다.").is_displayed()
+
+        dnIB1 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText").text
+        print(dnIB1,"<<<<<이 친구는 기획이 이상하여 64자 넘어갔을때 잘못된 문구가 출력 되어 나중에 테스트 하시는분은 PES 기획에 문구 수정 요청하세요 ! ")
+        self.assertEqual(dnIB1, "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789012345678901234567890123456789012345678901234567890123456")
+
+        dnIB = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        dnIB.clear()
+
+        print("DQS-T14210 출입문 설정 페이지의 출입문명 인풋 박스 유효성 검사 | Pass")
+
+    def test_DQS_T14230(self):
+        print("DQS-T14230 스케줄 잠금 시간 목록 페이지의 뒤로가기 버튼 기능 동작 확인")
+
+        st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "잠금\n도연 책상 xs2")
+        st1.click()
+
+        time.sleep(1)
+
+        st2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "도연 책상 xs2")
+        st2.click()
+
+        time.sleep(1)
+
+        st3 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "스케줄 잠금\n없음")
+        st3.click()
+
+        self.driver.tap([(60, 190)])
+
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "출입문").is_displayed()
+
+        print("DQS-T14230 스케줄 잠금 시간 목록 페이지의 뒤로가기 버튼 기능 동작 확인 | Pass")
+
+    def test_DQS_T14229(self):
+        print("DQS-T14229 스케줄 열림 시간 목록 페이지의 뒤로가기 버튼 기능 동작 확인")
+
+        st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "잠금\n도연 책상 xs2")
+        st1.click()
+
+        time.sleep(1)
+
+        st2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "도연 책상 xs2")
+        st2.click()
+
+        time.sleep(1)
+
+        st3 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "스케줄 열림\n없음")
+        st3.click()
+
+        self.driver.tap([(60, 190)])
+
+        assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "출입문").is_displayed()
+
+        print("DQS-T14229 스케줄 열림 시간 목록 페이지의 뒤로가기 버튼 기능 동작 확인 | Pass")
+
+    def test_DQS_T14211(self):
+        print("DQS-T14211 출입문 설정 페이지의 출입문명 인풋 박스 X 버튼 기능 동작 확인")
+
+        door = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "잠금\n도연 책상 xs2")
+        door.click()
+
+        setting = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "도연 책상 xs2")
+        setting.click()
+
+        dnIB = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+        dnIB.click()
+        dnIB.send_keys("1")
+
+        can = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='1']/android.widget.ImageView")
+        can.click()
+
+        assert self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText").is_displayed()
+
+        print("DQS-T14211 출입문 설정 페이지의 출입문명 인풋 박스 X 버튼 기능 동작 확인 | Pass")
+
+
+
+
 class Video(unittest.TestCase):
     def setUp(self):
         options = UiAutomator2Options()
