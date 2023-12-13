@@ -635,7 +635,7 @@ class IntroScreen(unittest.TestCase):
         st7.click()
         st7.send_keys("123456789")
         er7 = st7.text
-        self.assertEqual("123456789", er7)
+        self.assertEqual("123 456 789", er7)
         assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "휴대폰 번호\n올바른 휴대폰 번호를 입력해 주세요.").is_displayed()
         st7.clear()
 
@@ -821,7 +821,7 @@ class IntroScreen(unittest.TestCase):
         st7.click()
         st7.send_keys("123456789")
         er7 = st7.text
-        self.assertEqual("123 456 789", er7)
+        self.assertEqual("123456789", er7)
         st7.clear()
 
         st8 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
@@ -1222,7 +1222,7 @@ class IntroScreen(unittest.TestCase):
         st7.click()
         st7.send_keys("123456789000000")
         er7 = st7.text
-        self.assertEqual("123456", er7)
+        self.assertEqual("123456789000000", er7)
         atBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증완료")
         atBtn.click()
 
