@@ -1,0 +1,8 @@
+{
+"platform_name": "Android",
+"device_name": "R39M30571MZ",
+"app_package": "com.suprema.moon",
+"app_activity": "com.suprema.moon.MainActivity",
+"automation_name": "UiAutomator2",
+"auto_grant_permissions": true
+}
