@@ -33,5 +33,5 @@ Mobile Automation Test 에 널리 활용되고 있으며 크로스 플랫폼 (IO
 
 + Intellij Test Report 제공 (HTML 형태 간결한 UI)
 + Reporting Frameword 활용 (Allure,ReportNG)
-+ Slcak 을 통한 Report 자동 전송 (Test 종료 시 설정된 Email 로 전송하는 방법)
++ Slack 을 통한 Report 자동 전송 (Test 종료 시 설정된 Email 로 전송하는 방법)
 + Jenkins/Firebase Testlab 의 TestReport 활용
