@@ -4,6 +4,8 @@ import os
 from datetime import datetime
 import re
 import subprocess
+from selenium.webdriver import ActionChains
+
 
 def swipe_until_element_found(driver, xpath, max_swipes=10):
     """
@@ -74,3 +76,11 @@ def extract_verification_code(driver, phone_number):
         return match.group(1)
     else:
         raise Exception("Verification code not found in SMS")
+
+    def swipe(self, start_x, start_y, end_x, end_y):
+        actions = ActionChains(self.driver)
+        actions.move_to_location(start_x, start_y)
+        actions.click_and_hold()
+        actions.move_by_offset(end_x - start_x, end_y - start_y)
+        actions.release()
+        actions.perform()
