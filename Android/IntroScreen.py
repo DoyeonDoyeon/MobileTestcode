@@ -35,6 +35,10 @@ signUpPhoneNumber = "android.widget.EditText"
 
 class IntroScreen(unittest.TestCase):
 
+    def __init__(self, methodName: str = ...):
+        super().__init__(methodName)
+        self.testMethodName = None
+
     def setUp(self):
 
         self.driver = AppiumConfig.get_driver()
@@ -86,7 +90,7 @@ class IntroScreen(unittest.TestCase):
             print("DQS_T13681 로그인/로그아웃 기능 동작 확인 | Pass")
         except Exception as e:
             capture_screenshot(self.driver, self._testMethodName)
-            print("DQS_T13681 로그인/로그아웃 기능 동작 확인 | Failed")
+            print(f"{self._testMethodName} | Failed")
             print(str(e))
             self.fail()
 
