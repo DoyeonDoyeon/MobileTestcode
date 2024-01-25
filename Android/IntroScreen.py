@@ -13,8 +13,8 @@ from selenium.webdriver.common.action_chains import ActionChains
 """
 기본 테스트 계정
 Standard Account
-ID : 01090497847
-Password : Rlaehdus100!
+ID : 01020905304
+Password : Wjdrnrwls100!
 
 유일한 관리자 계정
 ID : 010311111111
@@ -35,16 +35,13 @@ signUpPhoneNumber = "android.widget.EditText"
 
 class IntroScreen(unittest.TestCase):
 
-    def __init__(self, methodName: str = ...):
-        super().__init__(methodName)
-        self.testMethodName = None
-
     def setUp(self):
 
         self.driver = AppiumConfig.get_driver()
-        self.driver.implicitly_wait(10)
+        self.driver.implicitly_wait(15)
 
     def tearDown(self):
+        time.sleep(2)
         self.driver.quit()
 
     def test_DQS_T13681(self):
@@ -53,23 +50,25 @@ class IntroScreen(unittest.TestCase):
             login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그인")
             login_button.click()
 
+            time.sleep(5)
+
             phone_input_box = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ImageView[@content-desc=\"휴대폰 번호\n비밀번호\"]/android.widget.EditText[1]")
             phone_input_box.click()
             self.driver.press_keycode(7)
             self.driver.press_keycode(8)
             self.driver.press_keycode(7)
+            self.driver.press_keycode(9)
+            self.driver.press_keycode(7)
             self.driver.press_keycode(16)
             self.driver.press_keycode(7)
+            self.driver.press_keycode(12)
+            self.driver.press_keycode(10)
+            self.driver.press_keycode(7)
             self.driver.press_keycode(11)
-            self.driver.press_keycode(16)
-            self.driver.press_keycode(14)
-            self.driver.press_keycode(15)
-            self.driver.press_keycode(11)
-            self.driver.press_keycode(14)
 
             password_input_box = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ImageView[@content-desc=\"휴대폰 번호\n비밀번호\"]/android.widget.EditText[2]")
             password_input_box.click()
-            password_input_box.send_keys("Rlaehdus100!")
+            password_input_box.send_keys("Wjdrnrwls100!")
 
             login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그인")
             login_button.click()
@@ -316,7 +315,7 @@ class IntroScreen(unittest.TestCase):
 
             phoNo.send_keys("123456789")
             cl5 = phoNo.text
-            self.assertEqual("123 456 789", cl5)
+            self.assertEqual("123456789", cl5)
 
             next = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증요청")
             next.click()
@@ -527,7 +526,7 @@ class IntroScreen(unittest.TestCase):
 
             st2 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ImageView[@content-desc=\"휴대폰 번호\n비밀번호\"]/android.widget.EditText[1]")
             st2.click()
-            st2.send_keys("01022221111")
+            st2.send_keys("01099887766")
 
             self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 2222 1111']/android.widget.ImageView").is_displayed()
             st3 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 2222 1111']/android.widget.ImageView")
@@ -770,7 +769,7 @@ class IntroScreen(unittest.TestCase):
 
             st2 = self.driver.find_element(AppiumBy.CLASS_NAME, signUpPhoneNumber)
             st2.click()
-            st2.send_keys("01022221111")
+            st2.send_keys("01099887766")
 
             self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 2222 1111']/android.widget.ImageView").is_displayed()
             st3 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 2222 1111']/android.widget.ImageView")
@@ -972,7 +971,7 @@ class IntroScreen(unittest.TestCase):
 
             st3 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
             st3.click()
-            st3.send_keys("01022221111")
+            st3.send_keys("01099887766")
 
             self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 2222 1111']/android.widget.ImageView").is_displayed()
             st3 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 2222 1111']/android.widget.ImageView")
@@ -1129,7 +1128,7 @@ class IntroScreen(unittest.TestCase):
 
             st2 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
             st2.click()
-            st2.send_keys("01022221111")
+            st2.send_keys("01099887766")
 
             st3 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증요청")
             st3.click()
@@ -1253,7 +1252,7 @@ class IntroScreen(unittest.TestCase):
 
             st4 = self.driver.find_element(AppiumBy.CLASS_NAME, signUpPhoneNumber)
             st4.click()
-            st4.send_keys("01078458959")
+            st4.send_keys("01078521635")
 
             st5 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authenticationBtn)
             st5.click()
@@ -1263,20 +1262,20 @@ class IntroScreen(unittest.TestCase):
             st3 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
             st3.send_keys("123456")
 
-            time.sleep(360)
+            time.sleep(200)
 
             assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "0분 0초").is_displayed()
 
             st6 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증완료")
             st6.click()
 
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "+82 01078458959").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "+82 01078521635").is_displayed()
 
             st7 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "재전송")
             st7.click()
 
             st3 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
-            st3.clear()
+            st3.click()
             st3.send_keys("111111")
 
             st6 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증완료")
@@ -1372,7 +1371,7 @@ class IntroScreen(unittest.TestCase):
 
             st2 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
             st2.click()
-            st2.send_keys("01022221111")
+            st2.send_keys("01099887766")
 
             st3 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증요청")
             st3.click()
@@ -1447,7 +1446,7 @@ class IntroScreen(unittest.TestCase):
 
             st2 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
             st2.click()
-            st2.send_keys("01022221111")
+            st2.send_keys("01099887766")
 
             st3 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증요청")
             st3.click()
