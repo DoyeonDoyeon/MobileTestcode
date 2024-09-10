@@ -3,7 +3,7 @@ import unittest
 from appium import webdriver
 from appium.webdriver.common.appiumby import AppiumBy
 from appium.options.android import UiAutomator2Options
-from appium.webdriver.common.touch_action import TouchAction
+#from appium.webdriver.common.touch_action import TouchAction
 
 
 class LoginLogout(unittest.TestCase):
@@ -13,7 +13,7 @@ class LoginLogout(unittest.TestCase):
     def setUp(self):
         options = UiAutomator2Options()
         options.platform_name = 'Android'
-        options.device_name = 'R39M30571MZ'
+        options.device_name = 'R59M906R2SF'
         options.app_package = 'com.suprema.moon'
         options.app_activity = 'com.suprema.moon.MainActivity'
         options.automation_name = 'UiAutomator2'
