@@ -101,10 +101,6 @@ class AlramMenu(unittest.TestCase):
             place.click()
             time.sleep(5)
 
-            self.driver.tap([(786, 649)])
-            #비디오 공간 진입
-            time.sleep(5)
-
             spaceSetting = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "공간 설정")
             spaceSetting.click()
             time.sleep(1)
@@ -1653,6 +1649,7 @@ class adminMenu(unittest.TestCase):
 
             modifyBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "수정")
             modifyBtn.click()
+            time.sleep(1)
 
             assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "확인").is_displayed()
             assert self.driver.find_element(AppiumBy.XPATH, "(//android.view.View[@content-desc='삭제'])[1]").is_displayed()
@@ -1679,11 +1676,12 @@ class adminMenu(unittest.TestCase):
             # 초대하기 버튼 클릭
             inviteBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "초대하기")
             inviteBtn.click()
-            time.sleep(2)
+            time.sleep(3)
 
             #메인 관리자 권한 이관 동작
-            permission = self.driver.find_element(AppiumBy.XPATH, "(//android.view.View[@content-desc='권한 이관'])[1]")
+            permission = self.driver.find_element(AppiumBy.XPATH, "(//android.view.View[@content-desc='권한 이관'])[2]")
             permission.click()
+            time.sleep(1)
 
             assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "권한 이행").is_displayed()
             permission_Msg = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "메인 관리자 권한을 변경 하시겠습니까?")

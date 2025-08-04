@@ -10,6 +10,9 @@ from selenium.common import NoSuchElementException
 #from selenium.webdriver.common.action_chains import ActionChains
 from configuration.utill import capture_screenshot
 from configuration.webDriver import AppiumConfig
+import sys
+sys.path.append('../Android')
+from utils import *
 
 
 'Xpath'
@@ -22,239 +25,249 @@ class SideMenu(unittest.TestCase):
         self.driver = AppiumConfig.get_driver()
         self.driver.implicitly_wait(10)
 
-        login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "모바일로 로그인")
+        login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "이메일로 로그인")
         login_button.click()
 
-        phone_input_box = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ImageView[@content-desc=\"휴대폰 번호\n비밀번호\"]/android.widget.EditText[1]")
-        phone_input_box.click()
-        phone_input_box.send_keys("01020905304")
+        emailAdress = "kjjung+p1@suprema.co.kr"
+        email_input_box = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ImageView[@content-desc=\"이메일 주소\n비밀번호\"]/android.widget.EditText[1]")
+        email_input_box.click()
+        email_input_box.send_keys(emailAdress)
 
-        password_input_box = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ImageView[@content-desc=\"휴대폰 번호\n비밀번호\"]/android.widget.EditText[2]")
+        password_input_box = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ImageView[@content-desc=\"이메일 주소\n비밀번호\"]/android.widget.EditText[2]")
         password_input_box.click()
         password_input_box.send_keys("Kjstar36!!")
 
         login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그인")
         login_button.click()
+        time.sleep(1)
+
+        utils.authCode(self) #이메일 인증코드 동작
+
+        self.driver.hide_keyboard()
+
+        authApply = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증완료")
+        authApply.click()
+
         time.sleep(3)
 
         place = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "지문 카드 테스트")
         place.click()
         time.sleep(1)
 
-        self.driver.tap([(782, 1222)])
+        self.driver.tap([(265, 1222)])
         time.sleep(2)
 
     def tearDown(self):
         self.driver.quit()
 
-    def test_DQS_T13730(self):
+    def test_DQS_T888888_1(self):
         try:
-            print("DQS_T13730 모바일로 로그인 시 Side Menu 기본 UI 확인")
+            print("DQS_T888888_1 이메일로 로그인 시 Side Menu 기본 UI 확인")
 
             leadbutton = self.driver.find_element(AppiumBy.XPATH, "//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.widget.ImageView")
             leadbutton.click()
 
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "kjjung\n#01020905304").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "공간 관리자 1번입니다\n#kjjung+p1@suprema.co.kr").is_displayed()
             assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "설정").is_displayed()
             assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "고객센터").is_displayed()
             assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그아웃").is_displayed()
 
-            print("DQS_T13730 모바일로 로그인 시 Side Menu 기본 UI 확인 | Pass")
+            print("DQS_T888888_1 이메일로 로그인 시 Side Menu 기본 UI 확인 | Pass")
 
         except Exception as e:
             capture_screenshot(self.driver, self._testMethodName)
-            print("DQS_T13730 모바일로 로그인 시 Side Menu 기본 UI 확인 | Failed")
+            print("DQS_T888888_1 이메일로 로그인 시 Side Menu 기본 UI 확인 | Failed")
             print(str(e))
             self.fail()
 
-    # def test_DQS_T13731(self):
-    #     try:
-    #         print("DQS_T13731 방해 금지 시간 기능 동작 확인")
-    #
-    #         leadbutton = self.driver.find_element(AppiumBy.XPATH, "//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.widget.ImageView")
-    #         leadbutton.click()
-    #
-    #         setting = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "설정")
-    #         setting.click()
-    #
-    #         notouch = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "방해 금지 시간")
-    #         notouch.click()
-    #
-    #         notouch_button = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.Switch")
-    #         is_toggle_on = notouch_button.get_attribute("checked") == 'true'
-    #         print(is_toggle_on)
-    #         self.assertFalse(is_toggle_on)
-    #         notouch_button.click()
-    #
-    #
-    #         notouch_button = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.Switch")
-    #         is_toggle_on = notouch_button.get_attribute("checked") == 'true'
-    #         print(is_toggle_on)
-    #         self.assertTrue(is_toggle_on)
-    #
-    #         #assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "시작 시간\n 오전 00 : 00").is_displayed() #Defalut 값 확인 필요해서 주석처리
-    #
-    #         self.driver.tap([(840, 574)])
-    #         max_swipes = 20
-    #         start_x = 685
-    #         start_y = 1707
-    #         end_x = 685
-    #         end_y = 1707+85
-    #
-    #         for _ in range(max_swipes):
-    #             try:
-    #                 element = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "11시 정각")
-    #                 if element.is_displayed():
-    #                     break
-    #             except NoSuchElementException:
-    #                 self.driver.swipe(start_x, start_y, end_x, end_y)
-    #         else:
-    #             raise NoSuchElementException("찾을 수 없습니다.")
-    #
-    #             # assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "11시 정각").is_displayed()
-    #
-    #         max_swipes = 60
-    #         start_x1 = 797
-    #         start_y1 = 1707
-    #         end_x1 = 797
-    #         end_y1 = 1707+85
-    #
-    #         time.sleep(1)
-    #
-    #         for _ in range(max_swipes):
-    #             try:
-    #                 element = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "59분")
-    #                 if element.is_displayed():
-    #                     break
-    #             except NoSuchElementException:
-    #                 self.driver.swipe(start_x1, start_y1, end_x1, end_y1)
-    #         else:
-    #             raise NoSuchElementException("찾을 수 없습니다.")
-    #
-    #             # assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "59분").is_displayed()
-    #
-    #         max_swipes = 60
-    #         start_x3 = 926
-    #         start_y3 = 1707
-    #         end_x3 = 926
-    #         end_y3 = 1707+85
-    #
-    #         time.sleep(1)
-    #
-    #         for _ in range(max_swipes):
-    #             try:
-    #                 element = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "오후")
-    #                 if element.is_displayed():
-    #                     break
-    #             except NoSuchElementException:
-    #                 self.driver.swipe(start_x3, start_y3, end_x3, end_y3)
-    #         else:
-    #             raise NoSuchElementException("찾을 수 없습니다.")
-    #
-    #
-    #         confirm = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "확인")
-    #         confirm.click()
-    #
-    #         assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "시작 시간\n 오전 00 : 00")
-    #         assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "종료 시간\n 오후 11 : 59")
-    #
-    #
-    #         print("DQS_T13731 방해 금지 시간 기능 동작 확인 | Pass")
-    #
-    #     except Exception as e:
-    #         capture_screenshot(self.driver, self._testMethodName)
-    #         print("DQS_T13731 방해 금지 시간 기능 동작 확인 | Failed")
-    #         print(str(e))
-    #         self.fail()
+    def test_DQS_T13731(self):
+        try:
+            print("DQS_T13731 방해 금지 시간 기능 동작 확인")
 
-    # def test_DQS_T13732(self):
-    #     try:
-    #         print("DQS_T13732 방해 금지 시간 설정 불가 동작 확인")
-    #
-    #         leadbutton = self.driver.find_element(AppiumBy.XPATH, "//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.widget.ImageView")
-    #         leadbutton.click()
-    #
-    #         setting = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "설정")
-    #         setting.click()
-    #
-    #         notouch = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "방해 금지 시간")
-    #         notouch.click()
-    #
-    #         notouch_button = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.Switch")
-    #         is_toggle_on = notouch_button.get_attribute("checked") == 'true'
-    #         self.assertFalse(is_toggle_on)
-    #         notouch_button.click()
-    #
-    #         notouch_button = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.Switch")
-    #         is_toggle_on = notouch_button.get_attribute("checked") == 'true'
-    #         self.assertTrue(is_toggle_on)
-    #
-    #         assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "시작 시간\n 오전 00 : 00").is_displayed()
-    #
-    #         self.driver.tap([(840, 574)])
-    #         max_swipes = 60
-    #         start_x = 391
-    #         start_y = 1707
-    #         end_x = 391
-    #         end_y = 1707-85
-    #
-    #         for _ in range(max_swipes):
-    #             try:
-    #                 element = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "오후")
-    #                 if element.is_displayed():
-    #                     break
-    #             except NoSuchElementException:
-    #                 self.driver.swipe(start_x, start_y, end_x, end_y)
-    #         else:
-    #             raise NoSuchElementException("찾을 수 없습니다.")
-    #
-    #         max_swipes = 60
-    #         start_x1 = 686
-    #         start_y1 = 1706
-    #         end_x1 = 686
-    #         end_y1 = 1706+85
-    #
-    #         for _ in range(max_swipes):
-    #             try:
-    #                 element = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "11시 정각")
-    #                 if element.is_displayed():
-    #                     break
-    #             except NoSuchElementException:
-    #                 self.driver.swipe(start_x1, start_y1, end_x1, end_y1)
-    #         else:
-    #             raise NoSuchElementException("찾을 수 없습니다.")
-    #
-    #         max_swipes = 60
-    #         start_x2 = 926
-    #         start_y2 = 1707
-    #         end_x2 = 926
-    #         end_y2 = 1707+85
-    #
-    #         time.sleep(1)
-    #
-    #         for _ in range(max_swipes):
-    #             try:
-    #                 element = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "오전")
-    #                 if element.is_displayed():
-    #                     break
-    #             except NoSuchElementException:
-    #                 self.driver.swipe(start_x2, start_y2, end_x2, end_y2)
-    #         else:
-    #             raise NoSuchElementException("찾을 수 없습니다.")
-    #
-    #         confirm = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "확인")
-    #         is_toggle_on = confirm.get_attribute("checked") == 'true'
-    #         print(is_toggle_on)
-    #         self.assertFalse(is_toggle_on)
-    #         confirm.click()
-    #
-    #         print("DQS_T13732 방해 금지 시간 설정 불가 동작 확인 | Pass")
-    #
-    #     except Exception as e:
-    #         capture_screenshot(self.driver, self._testMethodName)
-    #         print("DQS_T13732 방해 금지 시간 설정 불가 동작 확인 | Failed")
-    #         print(str(e))
-    #         self.fail()
+            leadbutton = self.driver.find_element(AppiumBy.XPATH, "//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.widget.ImageView")
+            leadbutton.click()
+
+            setting = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "설정")
+            setting.click()
+
+            notouch = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "방해 금지 시간")
+            notouch.click()
+
+            notouch_button = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.Switch")
+            is_toggle_on = notouch_button.get_attribute("checked") == 'true'
+            print(is_toggle_on)
+            self.assertFalse(is_toggle_on)
+            notouch_button.click()
+
+
+            notouch_button = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.Switch")
+            is_toggle_on = notouch_button.get_attribute("checked") == 'true'
+            print(is_toggle_on)
+            self.assertTrue(is_toggle_on)
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "시작 시간\n 오전 00 : 00").is_displayed()
+
+            self.driver.tap([(840, 574)])
+            max_swipes = 20
+            start_x = 685
+            start_y = 1707
+            end_x = 685
+            end_y = 1707+85
+
+            for _ in range(max_swipes):
+                try:
+                    element = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "11시 정각")
+                    if element.is_displayed():
+                        break
+                except NoSuchElementException:
+                    self.driver.swipe(start_x, start_y, end_x, end_y)
+            else:
+                raise NoSuchElementException("찾을 수 없습니다.")
+
+                # assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "11시 정각").is_displayed()
+
+            max_swipes = 60
+            start_x1 = 797
+            start_y1 = 1707
+            end_x1 = 797
+            end_y1 = 1707+85
+
+            time.sleep(1)
+
+            for _ in range(max_swipes):
+                try:
+                    element = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "59분")
+                    if element.is_displayed():
+                        break
+                except NoSuchElementException:
+                    self.driver.swipe(start_x1, start_y1, end_x1, end_y1)
+            else:
+                raise NoSuchElementException("찾을 수 없습니다.")
+
+                # assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "59분").is_displayed()
+
+            max_swipes = 60
+            start_x3 = 926
+            start_y3 = 1707
+            end_x3 = 926
+            end_y3 = 1707+85
+
+            time.sleep(1)
+
+            for _ in range(max_swipes):
+                try:
+                    element = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "오후")
+                    if element.is_displayed():
+                        break
+                except NoSuchElementException:
+                    self.driver.swipe(start_x3, start_y3, end_x3, end_y3)
+            else:
+                raise NoSuchElementException("찾을 수 없습니다.")
+
+
+            confirm = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "확인")
+            confirm.click()
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "시작 시간\n 오전 00 : 00")
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "종료 시간\n 오후 11 : 59")
+
+
+            print("DQS_T13731 방해 금지 시간 기능 동작 확인 | Pass")
+
+        except Exception as e:
+            capture_screenshot(self.driver, self._testMethodName)
+            print("DQS_T13731 방해 금지 시간 기능 동작 확인 | Failed")
+            print(str(e))
+            self.fail()
+
+    def test_DQS_T13732(self):
+        try:
+            print("DQS_T13732 방해 금지 시간 설정 불가 동작 확인")
+
+            leadbutton = self.driver.find_element(AppiumBy.XPATH, "//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.widget.ImageView")
+            leadbutton.click()
+
+            setting = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "설정")
+            setting.click()
+
+            notouch = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "방해 금지 시간")
+            notouch.click()
+
+            notouch_button = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.Switch")
+            is_toggle_on = notouch_button.get_attribute("checked") == 'true'
+            self.assertFalse(is_toggle_on)
+            notouch_button.click()
+
+            notouch_button = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.Switch")
+            is_toggle_on = notouch_button.get_attribute("checked") == 'true'
+            self.assertTrue(is_toggle_on)
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "시작 시간\n 오전 00 : 00").is_displayed()
+
+            self.driver.tap([(840, 574)])
+            max_swipes = 60
+            start_x = 391
+            start_y = 1707
+            end_x = 391
+            end_y = 1707-85
+
+            for _ in range(max_swipes):
+                try:
+                    element = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "오후")
+                    if element.is_displayed():
+                        break
+                except NoSuchElementException:
+                    self.driver.swipe(start_x, start_y, end_x, end_y)
+            else:
+                raise NoSuchElementException("찾을 수 없습니다.")
+
+            max_swipes = 60
+            start_x1 = 686
+            start_y1 = 1706
+            end_x1 = 686
+            end_y1 = 1706+85
+
+            for _ in range(max_swipes):
+                try:
+                    element = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "11시 정각")
+                    if element.is_displayed():
+                        break
+                except NoSuchElementException:
+                    self.driver.swipe(start_x1, start_y1, end_x1, end_y1)
+            else:
+                raise NoSuchElementException("찾을 수 없습니다.")
+
+            max_swipes = 60
+            start_x2 = 926
+            start_y2 = 1707
+            end_x2 = 926
+            end_y2 = 1707+85
+
+            time.sleep(1)
+
+            for _ in range(max_swipes):
+                try:
+                    element = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "오전")
+                    if element.is_displayed():
+                        break
+                except NoSuchElementException:
+                    self.driver.swipe(start_x2, start_y2, end_x2, end_y2)
+            else:
+                raise NoSuchElementException("찾을 수 없습니다.")
+
+            confirm = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "확인")
+            is_toggle_on = confirm.get_attribute("checked") == 'true'
+            print(is_toggle_on)
+            self.assertFalse(is_toggle_on)
+            confirm.click()
+
+            print("DQS_T13732 방해 금지 시간 설정 불가 동작 확인 | Pass")
+
+        except Exception as e:
+            capture_screenshot(self.driver, self._testMethodName)
+            print("DQS_T13732 방해 금지 시간 설정 불가 동작 확인 | Failed")
+            print(str(e))
+            self.fail()
 
     def test_DQS_T13733(self):
         try:

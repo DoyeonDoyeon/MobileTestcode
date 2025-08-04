@@ -13,7 +13,7 @@ class LoginLogout(unittest.TestCase):
     def setUp(self):
         options = UiAutomator2Options()
         options.platform_name = 'Android'
-        options.device_name = 'R59M906R2SF'
+        options.device_name = 'R3CXB0MKLGP'
         options.app_package = 'com.suprema.moon'
         options.app_activity = 'com.suprema.moon.MainActivity'
         options.automation_name = 'UiAutomator2'

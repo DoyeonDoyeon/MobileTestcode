@@ -323,12 +323,12 @@ class UserMenu(unittest.TestCase):
             nextBtn.click()
 
             #출입문 1번 삭제
-            doorDelete2 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='출입문\nDoor1_BS3\nDoor2_N2\n모든 출입문은 해당 공간에 추가 혹은 삭제되는 모든 출입문 권한을 자동 반영 합니다.']/android.widget.ImageView[2]")
-            doorDelete2.click()
+            doorDelete3 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='출입문\nDoor1_BS3\nDoore2_N2\n모든 출입문은 해당 공간에 추가 혹은 삭제되는 모든 출입문 권한을 자동 반영 합니다.']/android.widget.ImageView[2]")
+            doorDelete3.click()
 
             #출입문 2번 삭제
-            doorDelete1 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='출입문\nDoor2_N2']/android.widget.ImageView[2]")
-            doorDelete1.click()
+            doorDelete4 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='출입문\nDoore2_N2']/android.widget.ImageView[2]")
+            doorDelete4.click()
 
             #초대 버튼 - 버튼 비활성화를 확인하지 못하여 클릭 후 페이지 유지 동작으로 작성
             st3 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, invite)
