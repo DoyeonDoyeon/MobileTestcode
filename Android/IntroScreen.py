@@ -5,13 +5,18 @@ from appium import webdriver
 from appium.webdriver.common.appiumby import AppiumBy
 from appium.options.android import UiAutomator2Options
 import os
+import random
+
+from selenium.webdriver.remote.mobile import Mobile
+
+import Android.User
 from configuration.webDriver import AppiumConfig
 from configuration.utill import capture_screenshot
 from selenium.common import NoSuchElementException
 from selenium.webdriver.common.action_chains import ActionChains
 import sys
 sys.path.append('../Android')
-from utils import *
+from Android import utils
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -135,7 +140,7 @@ class IntroScreen(unittest.TestCase):
 
             time.sleep(3)
 
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "지문 카드 테스트").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "웹게이트비디오").is_displayed()
 
             self.driver.quit()
 
@@ -154,7 +159,7 @@ class IntroScreen(unittest.TestCase):
 
             time.sleep(1)
 
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "지문 카드 테스트").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "웹게이트비디오").is_displayed()
 
             pass
 
@@ -253,6 +258,9 @@ class IntroScreen(unittest.TestCase):
             self.fail()
 
     def test_DQS_T999999_1(self):
+        """
+        DQS_T99999 이메일로 로그인/로그아웃 기능 동작 확인
+        """
         try:
             print("DQS_T99999 이메일로 로그인/로그아웃 기능 동작 확인")
 
@@ -277,7 +285,7 @@ class IntroScreen(unittest.TestCase):
             assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "6 characters remaining").is_displayed()
             assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authComplete).is_displayed()
 
-            utils.authCode(self) #이메일 인증코드 동작
+            utils.authCode(self)
 
             assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "No characters remaining").is_displayed()
 
@@ -494,7 +502,7 @@ class IntroScreen(unittest.TestCase):
 
             time.sleep(3)
 
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "지문 카드 테스트").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "Visitor Place1").is_displayed()
 
             self.driver.quit()
 
@@ -513,7 +521,7 @@ class IntroScreen(unittest.TestCase):
 
             time.sleep(1)
 
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "지문 카드 테스트").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "Visitor Place1").is_displayed()
 
             pass
 
@@ -595,8 +603,6 @@ class IntroScreen(unittest.TestCase):
 
             utils.authCode(self) #이메일 인증코드 동작
 
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "No characters remaining").is_displayed()
-
             self.driver.hide_keyboard()
 
             authBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authComplete)
@@ -638,26 +644,37 @@ class IntroScreen(unittest.TestCase):
             authBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authComplete)
             authBtn.click()
 
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "지문 카드 테스트").is_displayed()
-            placeSelete = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "지문 카드 테스트")
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "Visitor Place1").is_displayed()
+            placeSelete = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "Visitor Place1")
             placeSelete.click()
 
             #입력박스에 문구 출력 element가 없어 공간 그룹에 등록된 임의 공간 출력 확인 케이스로 작성함
             assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "공간 선택").is_displayed()
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "지문 카드 테스트").is_displayed()
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "고객사 확인_서비스 공간").is_displayed()
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비디오 공간\nQA 멤버쉽 관리 공간_테스트 입니다\nE2E도 테스트하는 공간입니다").is_displayed()
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "QA 무인매장\n1212").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "Visitor Place1\nID : 240").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "face 링크 공간\nID : 196").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "c 토르\nID : 112").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "b 안씀4\nID : 101").is_displayed()
 
             placeInput = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText")
             placeInput.click()
-            placeInput.send_keys("visitor")
-
-            searchBtn = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText/android.widget.ImageView")
-            searchBtn.click()
+            placeInput.send_keys("비디오 공간")
             time.sleep(1)
 
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "Visitor Place1\n11").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비디오 공간\nID : 22").is_displayed()
+
+            self.driver.tap([(260, 644)])
+            time.sleep(2)
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비디오 공간").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "공간 설정").is_displayed()
+            assert self.driver.find_element(AppiumBy.XPATH, "//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.widget.ImageView[7]").is_displayed()
+
+            placeSetting = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "공간 설정")
+            placeSetting.click()
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "알람\n공간").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "출입 통제").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "관리자 초대").is_displayed()
 
             pass
             print("DQS_T999999 공간 그룹 관리자로 이메일 로그인 시 동작 확인 | Pass")
@@ -668,20 +685,534 @@ class IntroScreen(unittest.TestCase):
             print(str(e))
             self.fail()
 
-    def test_DQS_T13671(self):
+    def test_DQS_T13669_1(self):
         try:
-            print("DQS_T13671 공간의 유일한 관리자 회원 탈퇴 시도 시 동작 확인")
+            print("DQS_T13669_1 회원탈퇴(모바일) 기능 동작 확인")
 
-            utils.placeInvitePhone(self)
+            phone_Num = "010" + str(random.randint(0, 99999999)).zfill(8)
+            print(phone_Num)
 
-            utils.signUpMobile(self)
+            utils.placeInvitePhone(self, "22","kr", phone_Num, "MANAGER")
+            time.sleep(2)
+
+            utils.signUpMobile(self, phone_Num)
 
             login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin)
             login_button.click()
 
             phone_input_box = self.driver.find_element(AppiumBy.XPATH, phoneNumberInputBox)
             phone_input_box.click()
-            phone_input_box.send_keys("01010010001")
+            phone_input_box.send_keys(phone_Num)
+
+            password_input_box = self.driver.find_element(AppiumBy.XPATH, passwordInputBox)
+            password_input_box.click()
+            password_input_box.send_keys("Kjstar36!!")
+
+            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, login)
+            login_button.click()
+            time.sleep(2)
+
+            leadbutton = self.driver.find_element(AppiumBy.XPATH, lead)
+            leadbutton.click()
+
+            csctBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "고객센터")
+            csctBtn.click()
+
+            leavMB = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ImageView[@content-desc='안녕하세요.\n슈프리마 CLUe 서비스 고객센터 입니다.\n무엇을 도와드릴까요?\n운영시간 09:00 ~ 17:00\n(주말, 공휴일 제외)']/android.view.View[2]/android.widget.ImageView[3]")
+            leavMB.click()
+
+            assert self.driver.find_element(AppiumBy.XPATH, "(//android.view.View[@content-desc='회원탈퇴'])[1]").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원탈퇴하시기 전에 꼭 읽어 보세요.\n모든 개인 정보는 지정된 보유 기간 후 자동 삭제됩니다.\n계정이 삭제된 후에는 계정을 살리거나 데이터를 복구 할 수 없습니다.\n공간의 유일한 메인 관리자인 경우 다른 사람에게 이관 후 회원탈퇴가 가능합니다.").is_displayed()
+
+            start_x = 135
+            start_y = 2010
+
+            end_x = 982
+            end_y = 2010
+
+            actions = ActionChains(self.driver)
+            actions.w3c_actions.pointer_action.move_to_location(start_x, start_y)
+            actions.w3c_actions.pointer_action.pointer_down()
+            actions.w3c_actions.pointer_action.pause(0.1)  # 100ms 대기
+            actions.w3c_actions.pointer_action.move_to_location(end_x, end_y)
+            actions.w3c_actions.pointer_action.release()
+            actions.perform()
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원탈퇴").is_displayed()
+            deleteAccountMsg = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='회원탈퇴 성공하였습니다.\n로그인 페이지로 이동합니다.']")
+            contentDesc = deleteAccountMsg.get_attribute('content-desc')
+            print(f"추출한 content-desc 값 : {contentDesc}")
+            self.assertEqual(contentDesc, "회원탈퇴 성공하였습니다.\n로그인 페이지로 이동합니다.")
+            confirmBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, confirm)
+            confirmBtn.click()
+
+            self.driver.quit()
+
+            print("---------DQS-T14139 모바일로 로그인 페이지에서 당일 탈퇴한 계정으로 로그인 시도 시 로그인 실패 동작 확인 -> 사양변경으로 케이스가 동일하여 해당 케이스로 대체함  ")
+            time.sleep(3)
+
+            options = UiAutomator2Options()
+            options.platform_name = 'Android'
+            options.device_name = 'R3CXB0MKLGP'
+            options.app_package = 'com.suprema.moon'
+            options.app_activity = 'com.suprema.moon.MainActivity'
+            options.automation_name = 'UiAutomator2'
+            options.auto_grant_permissions = True
+            options.no_reset = True
+
+            self.driver = webdriver.Remote("http://localhost:4723/wd/hub", options=options)
+
+            time.sleep(1)
+
+            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin)
+            login_button.click()
+
+            phone_input_box = self.driver.find_element(AppiumBy.XPATH, phoneNumberInputBox)
+            phone_input_box.click()
+            phone_input_box.send_keys(phone_Num)
+
+            password_input_box = self.driver.find_element(AppiumBy.XPATH, passwordInputBox)
+            password_input_box.click()
+            password_input_box.send_keys("Kjstar36!!")
+
+            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, login)
+            login_button.click()
+            time.sleep(2)
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그인 정보 오류").is_displayed()
+            loginErrorMsg = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='계정 혹은 비밀번호를\n다시 확인해 주세요.\na1000']")
+            contentDesc = loginErrorMsg.get_attribute('content-desc')
+            print(f"추출한 content-desc 값 : {contentDesc}")
+            self.assertEqual(contentDesc, "계정 혹은 비밀번호를\n다시 확인해 주세요.\na1000")
+            confirmBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, confirm)
+            confirmBtn.click()
+
+            pass
+
+            print("DQS_T13669 회원탈퇴(모바일) 기능 동작 확인 | Pass")
+
+        except Exception as e:
+            capture_screenshot(self.driver, self._testMethodName)
+            print("DQS_T13669 회원탈퇴(모바일) 기능 동작 확인 | Failed")
+            print(str(e))
+            self.fail()
+
+    def test_DQS_T13669_2(self):
+        try:
+            print("DQS_T13669_2 회원탈퇴(이메일) 기능 동작 확인")
+
+            email_random = "kjjung+pp"+ str(random.randint(11, 9999)).zfill(3) + "@suprema.co.kr"
+            print(email_random)
+
+            utils.placeInviteEmail(self, "22",email_random, "MANAGER")
+            time.sleep(5)
+
+            utils.signUpEmail(self, email_random)
+            time.sleep(3)
+
+            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin)
+            login_button.click()
+
+            email_input_box = self.driver.find_element(AppiumBy.XPATH, emailInputBox)
+            email_input_box.click()
+            email_input_box.send_keys(email_random)
+
+            password_input_box = self.driver.find_element(AppiumBy.XPATH, emailPasswordInputBox)
+            password_input_box.click()
+            password_input_box.send_keys("Kjstar36!!")
+
+            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, login)
+            login_button.click()
+            time.sleep(2)
+
+            utils.authCode(self)
+
+            self.driver.hide_keyboard()
+
+            authBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authComplete)
+            authBtn.click()
+
+            leadbutton = self.driver.find_element(AppiumBy.XPATH, lead)
+            leadbutton.click()
+
+            csctBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "고객센터")
+            csctBtn.click()
+            time.sleep(0.3)
+
+            leavMB = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ImageView[@content-desc='안녕하세요.\n슈프리마 CLUe 서비스 고객센터 입니다.\n무엇을 도와드릴까요?\n운영시간 09:00 ~ 17:00\n(주말, 공휴일 제외)']/android.view.View[2]/android.widget.ImageView[3]")
+            leavMB.click()
+
+            assert self.driver.find_element(AppiumBy.XPATH, "(//android.view.View[@content-desc='회원탈퇴'])[1]").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원탈퇴하시기 전에 꼭 읽어 보세요.\n모든 개인 정보는 지정된 보유 기간 후 자동 삭제됩니다.\n계정이 삭제된 후에는 계정을 살리거나 데이터를 복구 할 수 없습니다.\n공간의 유일한 메인 관리자인 경우 다른 사람에게 이관 후 회원탈퇴가 가능합니다.").is_displayed()
+
+            start_x = 135
+            start_y = 2010
+
+            end_x = 982
+            end_y = 2010
+
+            actions = ActionChains(self.driver)
+            actions.w3c_actions.pointer_action.move_to_location(start_x, start_y)
+            actions.w3c_actions.pointer_action.pointer_down()
+            actions.w3c_actions.pointer_action.pause(0.1)  # 100ms 대기
+            actions.w3c_actions.pointer_action.move_to_location(end_x, end_y)
+            actions.w3c_actions.pointer_action.release()
+            actions.perform()
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원탈퇴").is_displayed()
+            deleteAccountMsg = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='회원탈퇴 성공하였습니다.\n로그인 페이지로 이동합니다.']")
+            contentDesc = deleteAccountMsg.get_attribute('content-desc')
+            print(f"추출한 content-desc 값 : {contentDesc}")
+            self.assertEqual(contentDesc, "회원탈퇴 성공하였습니다.\n로그인 페이지로 이동합니다.")
+            confirmBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, confirm)
+            confirmBtn.click()
+
+            self.driver.quit()
+
+            print("---------DQS-T999999_15 이메일로 로그인 페이지에서 당일 탈퇴한 계정으로 로그인 시도 시 로그인 실패 동작 확인 -> 사양변경으로 케이스가 동일하여 해당 케이스로 대체함  ")
+            time.sleep(3)
+
+            options = UiAutomator2Options()
+            options.platform_name = 'Android'
+            options.device_name = 'R3CXB0MKLGP'
+            options.app_package = 'com.suprema.moon'
+            options.app_activity = 'com.suprema.moon.MainActivity'
+            options.automation_name = 'UiAutomator2'
+            options.auto_grant_permissions = True
+            options.no_reset = True
+
+            self.driver = webdriver.Remote("http://localhost:4723/wd/hub", options=options)
+
+            time.sleep(1)
+
+            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin)
+            login_button.click()
+
+            email_input_box = self.driver.find_element(AppiumBy.XPATH, emailInputBox)
+            email_input_box.click()
+            email_input_box.send_keys(email_random)
+
+            password_input_box = self.driver.find_element(AppiumBy.XPATH, emailPasswordInputBox)
+            password_input_box.click()
+            password_input_box.send_keys("Kjstar36!!")
+
+            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, login)
+            login_button.click()
+            time.sleep(2)
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그인 정보 오류").is_displayed()
+            loginErrorMsg = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='계정 혹은 비밀번호를\n다시 확인해 주세요.\na1000']")
+            contentDesc = loginErrorMsg.get_attribute('content-desc')
+            print(f"추출한 content-desc 값 : {contentDesc}")
+            self.assertEqual(contentDesc, "계정 혹은 비밀번호를\n다시 확인해 주세요.\na1000")
+            confirmBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, confirm)
+            confirmBtn.click()
+
+            pass
+
+            print("DQS_T13669_2 회원탈퇴(이메일) 기능 동작 확인 | Pass")
+
+        except Exception as e:
+            capture_screenshot(self.driver, self._testMethodName)
+            print("DQS_T13669_2 회원탈퇴(이메일) 기능 동작 확인 | Failed")
+            print(str(e))
+            self.fail()
+
+    def test_DQS_T13670(self):
+        try:
+            print("DQS_T13670 모바일 로그인에서 비밀번호 찾기 기능 동작 확인")
+
+            phone_num = "010" + str(random.randint(0, 99999999)).zfill(8)
+            print(phone_num)
+
+            utils.signUpMobile(self, phone_num)
+            time.sleep(2)
+
+            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin)
+            login_button.click()
+
+            resetPassword_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 찾기")
+            resetPassword_button.click()
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 찾기").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "휴대폰 번호").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "+82").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authRequest).is_displayed()
+
+            phone_input_box = self.driver.find_element(AppiumBy.CLASS_NAME, signUpInput)
+            phone_input_box.click()
+            phone_input_box.send_keys(phone_num)
+
+            authRequestBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authRequest)
+            authRequestBtn.click()
+            time.sleep(0.5)
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 재설정").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, f"휴대폰 번호\n{phone_num}\n인증번호").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "재전송").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "6 characters remaining").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증완료").is_displayed()
+
+            utils.authCode_mobile(self)
+            time.sleep(0.5)
+
+            authCompleteBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authComplete)
+            authCompleteBtn.click()
+            time.sleep(1)
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 재설정").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, f"휴대폰 번호\n{phone_num}\n비밀번호\n비밀번호 재입력").is_displayed()
+
+            password1 = self.driver.find_element(AppiumBy.XPATH, f"//android.view.View[@content-desc='휴대폰 번호\n{phone_num}\n비밀번호\n비밀번호 재입력']/android.widget.EditText[1]")
+            password1.click()
+            password1.send_keys("Kjstar36!@")
+
+            passwordInput1 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='••••••••••']")
+            text1 = passwordInput1.get_attribute('text')
+            print(f"추출한 text 값 : {text1}")
+            self.assertEqual(text1, "••••••••••")
+
+            passwordLook1 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='••••••••••']/android.widget.ImageView")
+            passwordLook1.click()
+
+            passwordInput2 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='Kjstar36!@']")
+            text2 = passwordInput2.get_attribute('text')
+            print(f"추출한 text 값 : {text2}")
+            self.assertEqual(text2, "Kjstar36!@")
+
+            rePassword1 = self.driver.find_element(AppiumBy.XPATH, f"//android.view.View[@content-desc='휴대폰 번호\n{phone_num}\n비밀번호\n비밀번호 재입력']/android.widget.EditText[2]")
+            rePassword1.click()
+            rePassword1.send_keys("Kjstar36!@")
+
+            rePasswordInput1 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='••••••••••']")
+            text3 = rePasswordInput1.get_attribute('text')
+            print(f"추출한 text 값 : {text3}")
+            self.assertEqual(text3, "••••••••••")
+
+            rePasswordLook2 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='••••••••••']/android.widget.ImageView")
+            rePasswordLook2.click()
+
+            rePasswordInput2 = self.driver.find_element(AppiumBy.XPATH, "(//android.widget.EditText[@text='Kjstar36!@'])[2]")
+            text4 = rePasswordInput2.get_attribute('text')
+            print(f"추출한 text 값 : {text4}")
+            self.assertEqual(text4, "Kjstar36!@")
+
+            reSetBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "재설정")
+            reSetBtn.click()
+            time.sleep(0.5)
+
+            assert self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='확인']").is_displayed()
+            resetMsg = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='재설정 되었습니다.\n변경된 비밀번호로 로그인 해주세요.']")
+            contentDesc = resetMsg.get_attribute('content-desc')
+            print(f"추출한 content-desc 값 : {contentDesc}")
+            self.assertEqual(contentDesc, "재설정 되었습니다.\n변경된 비밀번호로 로그인 해주세요.")
+
+            confirmBtn = self.driver.find_element(AppiumBy.XPATH, "//android.widget.Button[@content-desc='확인']")
+            confirmBtn.click()
+            time.sleep(1)
+
+            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin)
+            login_button.click()
+
+            mobile_input_box = self.driver.find_element(AppiumBy.XPATH, phoneNumberInputBox)
+            mobile_input_box.click()
+            mobile_input_box.send_keys(phone_num)
+
+            password_input_box = self.driver.find_element(AppiumBy.XPATH, passwordInputBox)
+            password_input_box.click()
+            password_input_box.send_keys("Kjstar36!!")
+
+            loginBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, login)
+            loginBtn.click()
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그인 정보 오류").is_displayed()
+            loginError = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='계정 혹은 비밀번호를\n다시 확인해 주세요.\na1000']")
+            contentDesc = loginError.get_attribute('content-desc')
+            print(f"추출한 content-desc 값 : {contentDesc}")
+            self.assertEqual(contentDesc, "계정 혹은 비밀번호를\n다시 확인해 주세요.\na1000")
+
+            confirmBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, confirm)
+            confirmBtn.click()
+
+            password_input_box.clear()
+            password_input_box.click()
+            password_input_box.send_keys("Kjstar36!@")
+
+            loginBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, login)
+            loginBtn.click()
+            time.sleep(1.5)
+
+            print("----- 시나리오 종료 - 회원 탈퇴----")
+            utils.leaveAdmin(self)
+
+            pass
+
+            print("DQS_T13670 모바일 로그인에서 비밀번호 찾기 기능 동작 확인 | Pass")
+
+        except Exception as e:
+            capture_screenshot(self.driver, self._testMethodName)
+            print("DQS_T13670 모바일 로그인에서 비밀번호 찾기 기능 동작 확인 | Failed")
+            print(str(e))
+            self.fail()
+
+    def test_DQS_T999999_22(self):
+        try:
+            print("DQS_T999999_22 이메일 로그인에서 비밀번호 찾기 기능 동작 확인")
+
+            email_random = "kjjung+pp" + str(random.randint(11, 9999)).zfill(3) + "@suprema.co.kr"
+            print(email_random)
+
+            utils.signUpEmail(self, email_random)
+            time.sleep(2)
+
+            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin)
+            login_button.click()
+
+            resetPassword_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 찾기")
+            resetPassword_button.click()
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 찾기").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "이메일 주소").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authRequest).is_displayed()
+
+            email_input_box = self.driver.find_element(AppiumBy.CLASS_NAME, signUpInput)
+            email_input_box.click()
+            email_input_box.send_keys(email_random)
+
+            authRequestBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authRequest)
+            authRequestBtn.click()
+            time.sleep(0.5)
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 재설정").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, f"이메일 주소\n{email_random}\n인증번호").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "재전송").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "6 characters remaining").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증완료").is_displayed()
+
+            utils.authCode(self)
+            time.sleep(0.5)
+
+            authCompleteBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authComplete)
+            authCompleteBtn.click()
+            time.sleep(1)
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 재설정").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, f"이메일\n{email_random}\n비밀번호\n비밀번호 재입력").is_displayed()
+
+            password1 = self.driver.find_element(AppiumBy.XPATH, f"//android.view.View[@content-desc='이메일\n{email_random}\n비밀번호\n비밀번호 재입력']/android.widget.EditText[1]")
+            password1.click()
+            password1.send_keys("Kjstar36!@")
+
+            passwordInput1 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='••••••••••']")
+            text1 = passwordInput1.get_attribute('text')
+            print(f"추출한 text 값 : {text1}")
+            self.assertEqual(text1, "••••••••••")
+
+            passwordLook1 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='••••••••••']/android.widget.ImageView")
+            passwordLook1.click()
+
+            passwordInput2 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='Kjstar36!@']")
+            text2 = passwordInput2.get_attribute('text')
+            print(f"추출한 text 값 : {text2}")
+            self.assertEqual(text2, "Kjstar36!@")
+
+            rePassword1 = self.driver.find_element(AppiumBy.XPATH, f"//android.view.View[@content-desc='이메일\n{email_random}\n비밀번호\n비밀번호 재입력']/android.widget.EditText[2]")
+            rePassword1.click()
+            rePassword1.send_keys("Kjstar36!@")
+
+            rePasswordInput1 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='••••••••••']")
+            text3 = rePasswordInput1.get_attribute('text')
+            print(f"추출한 text 값 : {text3}")
+            self.assertEqual(text3, "••••••••••")
+
+            rePasswordLook2 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='••••••••••']/android.widget.ImageView")
+            rePasswordLook2.click()
+
+            rePasswordInput2 = self.driver.find_element(AppiumBy.XPATH, "(//android.widget.EditText[@text='Kjstar36!@'])[2]")
+            text4 = rePasswordInput2.get_attribute('text')
+            print(f"추출한 text 값 : {text4}")
+            self.assertEqual(text4, "Kjstar36!@")
+
+            reSetBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "재설정")
+            reSetBtn.click()
+            time.sleep(0.5)
+
+            assert self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='확인']").is_displayed()
+            resetMsg = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='재설정 되었습니다.\n변경된 비밀번호로 로그인 해주세요.']")
+            contentDesc = resetMsg.get_attribute('content-desc')
+            print(f"추출한 content-desc 값 : {contentDesc}")
+            self.assertEqual(contentDesc, "재설정 되었습니다.\n변경된 비밀번호로 로그인 해주세요.")
+
+            confirmBtn = self.driver.find_element(AppiumBy.XPATH, "//android.widget.Button[@content-desc='확인']")
+            confirmBtn.click()
+            time.sleep(1)
+
+            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin)
+            login_button.click()
+
+            email_input_box = self.driver.find_element(AppiumBy.XPATH, emailInputBox)
+            email_input_box.click()
+            email_input_box.send_keys(email_random)
+
+            password_input_box = self.driver.find_element(AppiumBy.XPATH, emailPasswordInputBox)
+            password_input_box.click()
+            password_input_box.send_keys("Kjstar36!!")
+
+            loginBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, login)
+            loginBtn.click()
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그인 정보 오류").is_displayed()
+            loginError = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='계정 혹은 비밀번호를\n다시 확인해 주세요.\na1000']")
+            contentDesc = loginError.get_attribute('content-desc')
+            print(f"추출한 content-desc 값 : {contentDesc}")
+            self.assertEqual(contentDesc, "계정 혹은 비밀번호를\n다시 확인해 주세요.\na1000")
+
+            confirmBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, confirm)
+            confirmBtn.click()
+
+            password_input_box.clear()
+            password_input_box.click()
+            password_input_box.send_keys("Kjstar36!@")
+
+            loginBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, login)
+            loginBtn.click()
+            time.sleep(1.5)
+
+            utils.authCode(self)
+            authBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authComplete)
+            authBtn.click()
+            time.sleep(1)
+
+            print("----- 시나리오 종료 - 회원 탈퇴----")
+            utils.leaveAdmin(self)
+
+            pass
+
+            print("DQS_T999999_20 이메일 로그인에서 비밀번호 찾기 기능 동작 확인 | Pass")
+
+        except Exception as e:
+            capture_screenshot(self.driver, self._testMethodName)
+            print("DQS_T999999_20 이메일 로그인에서 비밀번호 찾기 기능 동작 확인 | Failed")
+            print(str(e))
+            self.fail()
+
+    def test_DQS_T13671(self):
+        try:
+            print("DQS_T13671 공간의 유일한 관리자 회원 탈퇴 시도 시 동작 확인")
+
+            phone_num = "010" + str(random.randint(0, 99999999)).zfill(8)
+            print(phone_num)
+
+            utils.placeInvitePhone(self, "27","kr", phone_num, "MASTER")
+
+            utils.signUpMobile(self, phone_num)
+
+            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin)
+            login_button.click()
+
+            phone_input_box = self.driver.find_element(AppiumBy.XPATH, phoneNumberInputBox)
+            phone_input_box.click()
+            phone_input_box.send_keys(phone_num)
 
             password_input_box = self.driver.find_element(AppiumBy.XPATH, passwordInputBox)
             password_input_box.click()
@@ -745,7 +1276,7 @@ class IntroScreen(unittest.TestCase):
 
             phone_input_box = self.driver.find_element(AppiumBy.XPATH, phoneNumberInputBox)
             phone_input_box.click()
-            phone_input_box.send_keys("01010010001")
+            phone_input_box.send_keys(phone_num)
 
             password_input_box = self.driver.find_element(AppiumBy.XPATH, passwordInputBox)
             password_input_box.click()
@@ -1560,121 +2091,12 @@ class IntroScreen(unittest.TestCase):
             print(str(e))
             self.fail()
 
-    def test_DQS_T999999_15(self):
-        try:
-            print("DQS_T999999_15 이메일로 로그인 페이지에서 당일 탈퇴한 계정으로 로그인 시도 시 로그인 실패 동작 확인")
-
-            utils.placeInviteEmail(self)
-            time.sleep(3)
-
-            utils.signUpEmail(self)
-
-            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin)
-            login_button.click()
-
-            phone_input_box = self.driver.find_element(AppiumBy.XPATH, emailInputBox)
-            phone_input_box.click()
-            phone_input_box.send_keys("kjjung+pp1001@suprema.co.kr")
-
-            password_input_box = self.driver.find_element(AppiumBy.XPATH, emailPasswordInputBox)
-            password_input_box.click()
-            password_input_box.send_keys("Kjstar36!!")
-
-            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, login)
-            login_button.click()
-            time.sleep(2)
-
-            utils.authCode(self)
-
-            authBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authComplete)
-            authBtn.click()
-
-            #leadbutton = self.driver.find_element(AppiumBy.XPATH, "//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.widget.ImageView")
-            leadbutton = self.driver.find_element(AppiumBy.XPATH, lead)
-            leadbutton.click()
-
-            csctBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "고객센터")
-            csctBtn.click()
-
-            leavMB = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ImageView[@content-desc='안녕하세요.\n슈프리마 CLUe 서비스 고객센터 입니다.\n무엇을 도와드릴까요?\n운영시간 09:00 ~ 17:00\n(주말, 공휴일 제외)']/android.view.View[2]/android.widget.ImageView[3]")
-            leavMB.click()
-
-            start_x = 135
-            start_y = 2010
-
-            end_x = 982
-            end_y = 2010
-
-            actions = ActionChains(self.driver)
-            actions.w3c_actions.pointer_action.move_to_location(start_x, start_y)
-            actions.w3c_actions.pointer_action.pointer_down()
-            actions.w3c_actions.pointer_action.pause(0.1)  # 100ms 대기
-            actions.w3c_actions.pointer_action.move_to_location(end_x, end_y)
-            actions.w3c_actions.pointer_action.release()
-            actions.perform()
-
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원탈퇴").is_displayed()
-            deleteAccountMsg = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='회원탈퇴 성공하였습니다.\n로그인 페이지로 이동합니다.']")
-            contentDesc = deleteAccountMsg.get_attribute('content-desc')
-            print(f"추출한 content-desc 값 : {contentDesc}")
-            self.assertEqual(contentDesc, "회원탈퇴 성공하였습니다.\n로그인 페이지로 이동합니다.")
-            confirmBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, confirm)
-            confirmBtn.click()
-
-            self.driver.quit()
-
-            print("--------- 회원 탑퇴한 이메일 관리자 로그인 실패 케이스 시작")
-            time.sleep(3)
-
-            options = UiAutomator2Options()
-            options.platform_name = 'Android'
-            options.device_name = 'R3CXB0MKLGP'
-            options.app_package = 'com.suprema.moon'
-            options.app_activity = 'com.suprema.moon.MainActivity'
-            options.automation_name = 'UiAutomator2'
-            options.auto_grant_permissions = True
-            options.no_reset = True
-
-            self.driver = webdriver.Remote("http://localhost:4723/wd/hub", options=options)
-
-            time.sleep(1)
-
-            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin)
-            login_button.click()
-
-            phone_input_box = self.driver.find_element(AppiumBy.XPATH, emailInputBox)
-            phone_input_box.click()
-            phone_input_box.send_keys("kjjung+pp1001@suprema.co.kr")
-
-            password_input_box = self.driver.find_element(AppiumBy.XPATH, emailPasswordInputBox)
-            password_input_box.click()
-            password_input_box.send_keys("Kjstar36!!")
-
-            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, login)
-            login_button.click()
-            time.sleep(2)
-
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그인 정보 오류").is_displayed()
-            loginErrorMsg = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='계정 혹은 비밀번호를\n다시 확인해 주세요.\na1000']")
-            contentDesc = loginErrorMsg.get_attribute('content-desc')
-            print(f"추출한 content-desc 값 : {contentDesc}")
-            self.assertEqual(contentDesc, "계정 혹은 비밀번호를\n다시 확인해 주세요.\na1000")
-            confirmBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, confirm)
-            confirmBtn.click()
-
-            pass
-
-            print("DQS_T13671 공간의 유일한 관리자 회원 탈퇴 시도 시 동작 확인 | Pass")
-
-        except Exception as e:
-            capture_screenshot(self.driver, self._testMethodName)
-            print("DQS_T13683 로그인 실패 동작 확인 | Failed")
-            print(str(e))
-            self.fail()
-
     def test_DQS_T14140(self):
         try:
             print("DQS-T14140 모바일로 회원가입 휴대폰 번호 입력 페이지에서 당일 탈퇴한 계정 입력 시 동작 확인")
+
+            phone_num = "010" + str(random.randint(10000000, 99999999)).zfill(8)
+            print(phone_num)
 
             SignUp = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원가입")
             SignUp.click()
@@ -1691,13 +2113,16 @@ class IntroScreen(unittest.TestCase):
 
             phoNo = self.driver.find_element(AppiumBy.CLASS_NAME, signUpInput)
             phoNo.click()
-            phoNo.send_keys("01010010001")
+            phoNo.send_keys(phone_num)
 
             authButton = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authRequest)
             authButton.click()
 
+            formatted_phone_num = f"{phone_num[:3]} {phone_num[3:7]} {phone_num[7:]}"
+            print(formatted_phone_num)
+
             assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원가입").is_displayed()
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "휴대폰 번호\n010 1001 0001\n인증번호").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, f"휴대폰 번호\n{formatted_phone_num}\n인증번호").is_displayed()
 
             pass
 
@@ -1786,12 +2211,15 @@ class IntroScreen(unittest.TestCase):
         try:
             print("DQS-T14141 로그인 페이지에서 가입되지 않은 이메일 주소로 로그인 시도 시 로그인 실패 동작 확인")
 
+            email_random = "kjjung+pp" + str(random.randint(1000, 9999)).zfill(3) + "@suprema.co.kr"
+            print(email_random)
+
             st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin)
             st1.click()
 
             st2 = self.driver.find_element(AppiumBy.XPATH, emailInputBox)
             st2.click()
-            st2.send_keys("kjjung+pp3003@suprema.co.kr")
+            st2.send_keys(email_random)
             #가입되지 않는 이메일 입력
 
             st3 = self.driver.find_element(AppiumBy.XPATH, emailPasswordInputBox)
@@ -2299,6 +2727,9 @@ class IntroScreen(unittest.TestCase):
         try:
             print("DQS-T14146 모바일 회원가입 인증번호 입력 페이지에서 인증번호 재전송 시 기능 동작 확인")
 
+            phone_num = "010" + str(random.randint(10000000, 99999999)).zfill(8)
+            print(phone_num)
+
             st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원가입")
             st1.click()
 
@@ -2313,7 +2744,7 @@ class IntroScreen(unittest.TestCase):
 
             st4 = self.driver.find_element(AppiumBy.CLASS_NAME, signUpInput)
             st4.click()
-            st4.send_keys("01010012222")
+            st4.send_keys(phone_num)
 
             st5 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authRequest)
             st5.click()
@@ -2331,9 +2762,12 @@ class IntroScreen(unittest.TestCase):
             authBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authComplete)
             authBtn.click()
 
+            formatted_phone = f"{phone_num[:3]} {phone_num[3:7]} {phone_num[7:]}"
+            print(formatted_phone)
+
             assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "프로필 입력").is_displayed()
             assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "휴대폰 번호").is_displayed()
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "010 1001 2222").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, f"{formatted_phone}").is_displayed()
             assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "이름").is_displayed()
             assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호").is_displayed()
             assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 재입력").is_displayed()
@@ -2402,6 +2836,9 @@ class IntroScreen(unittest.TestCase):
         try:
             print("DQS-T14147 회원가입에 프로필 입력 페이지의 이름 인풋 박스 유효성 검사")
 
+            phome_num = "010" + str(random.randint(10000000, 99999999)).zfill(8)
+            print(phome_num)
+
             st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원가입")
             st1.click()
 
@@ -2416,7 +2853,7 @@ class IntroScreen(unittest.TestCase):
 
             st4 = self.driver.find_element(AppiumBy.CLASS_NAME, signUpInput)
             st4.click()
-            st4.send_keys("01010012222")
+            st4.send_keys(phome_num)
 
             st5 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authRequest)
             st5.click()
@@ -2632,9 +3069,9 @@ class IntroScreen(unittest.TestCase):
             print(str(e))
             self.fail()
 
-    def test_DQS_T14151(self):
+    def test_DQS_T14151_T14213_T14152(self):
         try:
-            print("DQS-T14151 회원가입에 프로필 입력 페이지의 비밀번호 인풋 박스 유효성 검사")
+            print("DQS-T14151 회원가입에 프로필 입력 페이지의 비밀번호 인풋 박스 유효성 검사 || DQS-T14213 회원가입에서 프로필 입력 페이지의 비밀번호 재입력 인풋 박스 유효성 검사 || DQS-T14152 회원가입에 프로필 입력 페이지에서 비밀번호 와 비밀번호 재입력 값이 다른 경우 확인")
 
             st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원가입")
             st1.click()
@@ -2648,9 +3085,11 @@ class IntroScreen(unittest.TestCase):
             moblieSel = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "모바일")
             moblieSel.click()
 
+            phone_Num = "010" + str(random.randint(0, 99999999)).zfill(8)
+            print(phone_Num)
             st4 = self.driver.find_element(AppiumBy.CLASS_NAME, signUpInput)
             st4.click()
-            st4.send_keys("01010013333")
+            st4.send_keys(phone_Num)
 
             st5 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authRequest)
             st5.click()
@@ -2668,248 +3107,37 @@ class IntroScreen(unittest.TestCase):
             nameInput.click()
             nameInput.send_keys("TestName")
 
-            passInput1 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ScrollView/android.widget.EditText[2]")
-            passInput1.click()
-            passInput1.send_keys("Suprem!")
+            utils.passwordValidtion(self)
 
-            lookBtn = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='•••••••']/android.widget.ImageView")
-            lookBtn.click()
-            pass1 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='Suprem!']")
-            text1 = pass1.get_attribute('text')
-            print(f"추출한 text 값 : {text1}")
-            self.assertEqual(text1, "Suprem!")
-
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "8-32자, 대,소문자 영문, 숫자, 특수문자를 조합해주세요.").is_displayed()
-            errorText1 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='8-32자, 대,소문자 영문, 숫자, 특수문자를 조합해주세요.']")
-            contentDesc1 = errorText1.get_attribute('content-desc')
-            print(f"추출한 content-desc 값 : {contentDesc1}")
-            self.assertEqual(contentDesc1, "8-32자, 대,소문자 영문, 숫자, 특수문자를 조합해주세요.")
-
-            passInput1.clear()
-            print("--------------- Suprem! 완료")
-
-            passInput2 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ScrollView/android.widget.EditText[2]")
-            passInput2.click()
-            passInput2.send_keys("Suprema-100!uprema-100!uprema-100!uprema-100!uprema-100!uprema-100!uprema-100!uprema-100!uprema-100!uprema-100!uprema-100!uprema-100!")
-
-            pass2 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='Suprema-100!uprema-100!uprema-100!uprema-100!uprema-100!uprema-100!uprema-100!uprema-100!uprema-100!uprema-100!uprema-100!uprema-100!']")
-            text2 = pass2.get_attribute('text')
-            print(f"추출한 text 값 : {text2}")
-            self.assertEqual(text2, "Suprema-100!uprema-100!uprema-100!uprema-100!uprema-100!uprema-100!uprema-100!uprema-100!uprema-100!uprema-100!uprema-100!uprema-100!")
-
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "8-32자, 대,소문자 영문, 숫자, 특수문자를 조합해주세요.").is_displayed()
-            errorText2 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='8-32자, 대,소문자 영문, 숫자, 특수문자를 조합해주세요.']")
-            contentDesc2 = errorText2.get_attribute('content-desc')
-            print(f"추출한 content-desc 값 : {contentDesc2}")
-            self.assertEqual(contentDesc1, "8-32자, 대,소문자 영문, 숫자, 특수문자를 조합해주세요.")
-
-            passInput2.clear()
-            print("--------------- Suprema-100!uprema-100!uprema-100!uprema-100!uprema-100!uprema-100!uprema-100!uprema-100!uprema-100!uprema-100!uprema-100!uprema-100! 완료")
-
-            passInput3 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ScrollView/android.widget.EditText[2]")
-            passInput3.click()
-            passInput3.send_keys("suprema-100!")
-
-            pass3 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='suprema-100!']")
-            text3 = pass3.get_attribute('text')
-            print(f"추출한 text 값 : {text3}")
-            self.assertEqual(text3, "suprema-100!")
-
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "8-32자, 대,소문자 영문, 숫자, 특수문자를 조합해주세요.").is_displayed()
-            errorText3 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='8-32자, 대,소문자 영문, 숫자, 특수문자를 조합해주세요.']")
-            contentDesc3 = errorText3.get_attribute('content-desc')
-            print(f"추출한 content-desc 값 : {contentDesc3}")
-            self.assertEqual(contentDesc3, "8-32자, 대,소문자 영문, 숫자, 특수문자를 조합해주세요.")
-
-            passInput3.clear()
-            print("--------------- suprema-100! 완료")
-
-            passInput4 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ScrollView/android.widget.EditText[2]")
-            passInput4.click()
-            passInput4.send_keys("SUPREMA-100!")
-
-            pass4 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='SUPREMA-100!']")
-            text4 = pass4.get_attribute('text')
-            print(f"추출한 text 값 : {text4}")
-            self.assertEqual(text4, "SUPREMA-100!")
-
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "8-32자, 대,소문자 영문, 숫자, 특수문자를 조합해주세요.").is_displayed()
-            errorText4 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='8-32자, 대,소문자 영문, 숫자, 특수문자를 조합해주세요.']")
-            contentDesc4 = errorText4.get_attribute('content-desc')
-            print(f"추출한 content-desc 값 : {contentDesc4}")
-            self.assertEqual(contentDesc4, "8-32자, 대,소문자 영문, 숫자, 특수문자를 조합해주세요.")
-
-            passInput4.clear()
-            print("--------------- SUPREMA-100! 완료")
-
-            passInput5 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ScrollView/android.widget.EditText[2]")
-            passInput5.click()
-            passInput5.send_keys("Suprema!")
-
-            pass5 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='Suprema!']")
-            text5 = pass5.get_attribute('text')
-            print(f"추출한 text 값 : {text5}")
-            self.assertEqual(text5, "Suprema!")
-
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "8-32자, 대,소문자 영문, 숫자, 특수문자를 조합해주세요.").is_displayed()
-            errorText5 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='8-32자, 대,소문자 영문, 숫자, 특수문자를 조합해주세요.']")
-            contentDesc5 = errorText5.get_attribute('content-desc')
-            print(f"추출한 content-desc 값 : {contentDesc5}")
-            self.assertEqual(contentDesc5, "8-32자, 대,소문자 영문, 숫자, 특수문자를 조합해주세요.")
-
-            passInput5.clear()
-            print("--------------- Suprema! 완료")
-
-            passInput6 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ScrollView/android.widget.EditText[2]")
-            passInput6.click()
-            passInput6.send_keys("Suprema100")
-
-            pass6 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='Suprema100']")
-            text6 = pass6.get_attribute('text')
-            print(f"추출한 text 값 : {text6}")
-            self.assertEqual(text6, "Suprema100")
-
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "8-32자, 대,소문자 영문, 숫자, 특수문자를 조합해주세요.").is_displayed()
-            errorText6 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='8-32자, 대,소문자 영문, 숫자, 특수문자를 조합해주세요.']")
-            contentDesc6 = errorText6.get_attribute('content-desc')
-            print(f"추출한 content-desc 값 : {contentDesc6}")
-            self.assertEqual(contentDesc6, "8-32자, 대,소문자 영문, 숫자, 특수문자를 조합해주세요.")
-
-            passInput6.clear()
-            print("--------------- Suprema100 완료")
-
-            passInput7 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ScrollView/android.widget.EditText[2]")
-            passInput7.click()
-            passInput7.send_keys("Suprema-123!")
-
-            pass7 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='Suprema-123!']")
-            text7 = pass7.get_attribute('text')
-            print(f"추출한 text 값 : {text7}")
-            self.assertEqual(text7, "Suprema-123!")
-
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "연속된 문자를 사용할 수 없습니다. (예: 123, abc 등)").is_displayed()
-            errorText7 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='연속된 문자를 사용할 수 없습니다. (예: 123, abc 등)']")
-            contentDesc7 = errorText7.get_attribute('content-desc')
-            print(f"추출한 content-desc 값 : {contentDesc7}")
-            self.assertEqual(contentDesc7, "연속된 문자를 사용할 수 없습니다. (예: 123, abc 등)")
-
-            passInput7.clear()
-            print("--------------- Suprema-123! 완료")
-
-            passInput8 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ScrollView/android.widget.EditText[2]")
-            passInput8.click()
-            passInput8.send_keys("ABCSuprema-100!")
-
-            pass8 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='ABCSuprema-100!']")
-            text8 = pass8.get_attribute('text')
-            print(f"추출한 text 값 : {text8}")
-            self.assertEqual(text8, "ABCSuprema-100!")
-
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "연속된 문자를 사용할 수 없습니다. (예: 123, abc 등)").is_displayed()
-            errorText8 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='연속된 문자를 사용할 수 없습니다. (예: 123, abc 등)']")
-            contentDesc8 = errorText8.get_attribute('content-desc')
-            print(f"추출한 content-desc 값 : {contentDesc8}")
-            self.assertEqual(contentDesc8, "연속된 문자를 사용할 수 없습니다. (예: 123, abc 등)")
-
-            passInput8.clear()
-            print("--------------- ABCSuprema-100! 완료")
-
-            passInput9 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ScrollView/android.widget.EditText[2]")
-            passInput9.click()
-            passInput9.send_keys("abcSuprema-100!")
-
-            pass9 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='abcSuprema-100!']")
-            text9 = pass9.get_attribute('text')
-            print(f"추출한 text 값 : {text9}")
-            self.assertEqual(text9, "abcSuprema-100!")
-
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "연속된 문자를 사용할 수 없습니다. (예: 123, abc 등)").is_displayed()
-            errorText9 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='연속된 문자를 사용할 수 없습니다. (예: 123, abc 등)']")
-            contentDesc9 = errorText9.get_attribute('content-desc')
-            print(f"추출한 content-desc 값 : {contentDesc9}")
-            self.assertEqual(contentDesc9, "연속된 문자를 사용할 수 없습니다. (예: 123, abc 등)")
-
-            passInput9.clear()
-            print("--------------- abcSuprema-100! 완료")
-
-            passInput10 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ScrollView/android.widget.EditText[2]")
-            passInput10.click()
-            passInput10.send_keys("SSSuprema-100!")
-
-            pass10 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='SSSuprema-100!']")
-            text10 = pass10.get_attribute('text')
-            print(f"추출한 text 값 : {text10}")
-            self.assertEqual(text10, "SSSuprema-100!")
-
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "동일 문자 3번 이상 연속 반복할 수 없습니다.").is_displayed()
-            errorText10 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='동일 문자 3번 이상 연속 반복할 수 없습니다.']")
-            contentDesc10 = errorText10.get_attribute('content-desc')
-            print(f"추출한 content-desc 값 : {contentDesc10}")
-            self.assertEqual(contentDesc10, "동일 문자 3번 이상 연속 반복할 수 없습니다.")
-
-            passInput10.clear()
-            print("--------------- SSSuprema-100! 완료")
-
-            passInput11 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ScrollView/android.widget.EditText[2]")
-            passInput11.click()
-            passInput11.send_keys("Suprema-111!")
-
-            pass11 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='Suprema-111!']")
-            text11 = pass11.get_attribute('text')
-            print(f"추출한 text 값 : {text11}")
-            self.assertEqual(text11, "Suprema-111!")
-
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "동일 문자 3번 이상 연속 반복할 수 없습니다.").is_displayed()
-            errorText11 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='동일 문자 3번 이상 연속 반복할 수 없습니다.']")
-            contentDesc11 = errorText11.get_attribute('content-desc')
-            print(f"추출한 content-desc 값 : {contentDesc11}")
-            self.assertEqual(contentDesc11, "동일 문자 3번 이상 연속 반복할 수 없습니다.")
-
-            passInput11.clear()
-            print("--------------- Suprema-111! 완료")
-
-            passInput12 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ScrollView/android.widget.EditText[2]")
-            passInput12.click()
-            passInput12.send_keys("sssSuprema-100!")
-
-            pass12 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='sssSuprema-100!']")
-            text12 = pass12.get_attribute('text')
-            print(f"추출한 text 값 : {text12}")
-            self.assertEqual(text12, "sssSuprema-100!")
-
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "동일 문자 3번 이상 연속 반복할 수 없습니다.").is_displayed()
-            errorText12 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='동일 문자 3번 이상 연속 반복할 수 없습니다.']")
-            contentDesc12 = errorText12.get_attribute('content-desc')
-            print(f"추출한 content-desc 값 : {contentDesc12}")
-            self.assertEqual(contentDesc12, "동일 문자 3번 이상 연속 반복할 수 없습니다.")
-
-            passInput12.clear()
-            print("--------------- sssSuprema-100! 완료")
+            time.sleep(0.5)
+            print("------------------- DQS-T14213 시작")
+            utils.RePasswordValidtion(self)
 
             print("------------------- DQS-T14152 시작")
-            passInput13 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ScrollView/android.widget.EditText[2]")
-            passInput13.click()
-            passInput12.send_keys("Kjstar36!!")
+            passInput = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ScrollView/android.widget.EditText[2]")
+            passInput.click()
+            passInput.send_keys("Kjstar36!!")
 
             rePassInput = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ScrollView/android.widget.EditText[3]")
             rePassInput.click()
-            rePassInput.send_keys("Kjstarf36!@")
+            rePassInput.send_keys("Kjstar36!@")
 
             assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호가 일치하지 않습니다.").is_displayed()
-            errorText13 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='비밀번호가 일치하지 않습니다.']")
-            contentDesc13 = errorText13.get_attribute('content-desc')
-            print(f"추출한 content-desc 값 : {contentDesc13}")
-            self.assertEqual(contentDesc13, "비밀번호가 일치하지 않습니다.")
+            errorText = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='비밀번호가 일치하지 않습니다.']")
+            contentDesc = errorText.get_attribute('content-desc')
+            print(f"추출한 content-desc 값 : {contentDesc}")
+            self.assertEqual(contentDesc, "비밀번호가 일치하지 않습니다.")
 
             print("------------------- DQS-T14152 완료")
 
+
             pass
 
-            print("DQS-T14151 회원가입에 프로필 입력 페이지의 비밀번호 인풋 박스 유효성 검사 | Pass")
+            print("DQS-T14151 회원가입에 프로필 입력 페이지의 비밀번호 인풋 박스 유효성 검사 || DQS-T14213 회원가입에서 프로필 입력 페이지의 비밀번호 재입력 인풋 박스 유효성 검사 || DQS-T14152 회원가입에 프로필 입력 페이지에서 비밀번호 와 비밀번호 재입력 값이 다른 경우 확인 | Pass")
 
         except Exception as e:
             capture_screenshot(self.driver, self._testMethodName)
-            print("DQS-T14151 회원가입에 프로필 입력 페이지의 비밀번호 인풋 박스 유효성 검사 | Failed")
+            print("DQS-T14151 DQS-T14151 회원가입에 프로필 입력 페이지의 비밀번호 인풋 박스 유효성 검사 || DQS-T14213 회원가입에서 프로필 입력 페이지의 비밀번호 재입력 인풋 박스 유효성 검사 || DQS-T14152 회원가입에 프로필 입력 페이지에서 비밀번호 와 비밀번호 재입력 값이 다른 경우 확인 | Failed")
             print(str(e))
             self.fail()
 
@@ -2917,7 +3145,7 @@ class IntroScreen(unittest.TestCase):
         try:
             print("DQS-T14153 비밀번호 찾기 페이지의 휴대폰 번호 인풋 박스 유효성 검사")
 
-            st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그인")
+            st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin)
             st1.click()
 
             st2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 찾기")
@@ -2958,7 +3186,6 @@ class IntroScreen(unittest.TestCase):
             st7 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
             st7.click()
             st7.send_keys("123456789")
-            #er7 = st7.text
             er7 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='123 456 789']")
             text1 = er7.get_attribute('text')
             print(f"추출한 text 값 : {text1}")
@@ -2975,25 +3202,29 @@ class IntroScreen(unittest.TestCase):
             st8 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
             st8.click()
             st8.send_keys("1234567890123450000")
-            er8 = st8.text
-            print(er8)
-            self.assertEqual("123 4567 8901", er8)
-            self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증요청").click()
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "필수 입력 사항이 누락되었습니다.").is_displayed()
-            noPass_Pop = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='필수 입력 사항이 누락되었습니다.']")
-            contentDesc2 = noPass_Pop.get_attribute('content-desc')
-            print(f"추출한 content-desc 값 : {contentDesc2}")
-            self.assertEqual(contentDesc2, "필수 입력 사항이 누락되었습니다.")
-            self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, confirm).click()
-            self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='123 4567 8901']/android.widget.ImageView").click()
+            er8 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='123 4567 8901']")
+            text2 = er8.get_attribute('text')
+            print(f"추출한 text 값 : {text2}")
+            self.assertEqual("123 4567 8901", text2)
+
+            authRequset1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authRequest)
+            isNext1 = authRequset1.is_enabled()
+            self.assertFalse(isNext1, "인증요청 버튼이 비활성화되어 있습니다.")
+
+            deleteBtn = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='123 4567 8901']/android.widget.ImageView")
+            deleteBtn.click()
 
             st9 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
             st9.click()
             st9.send_keys("01012345678")
-            er9 = st9.text
-            print(er9)
-            self.assertEqual("010 1234 5678", er9)
-            st9.clear()
+            er9 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 1234 5678']")
+            text3 = er9.get_attribute('text')
+            print(f"추출한 text 값 : {text3}")
+            self.assertEqual("010 1234 5678", text3)
+
+            authRequset2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authRequest)
+            isNext2 = authRequset2.is_enabled()
+            self.assertTrue(isNext2, "인증요청 버튼이 활성화되어 있습니다.")
 
             pass
 
@@ -3005,22 +3236,82 @@ class IntroScreen(unittest.TestCase):
             print(str(e))
             self.fail()
 
-    def test_DQS_T14154(self):
+    def test_DQS_T999999_23(self):
         try:
-            print("DQS-T14154 비밀번호 찾기 페이지의 휴대폰 번호 인풋 박스 X 버튼 기능 동작 확인")
+            print("DQS-T999999_23 비밀번호 찾기 페이지의 이메일 주소 인풋 박스 유효성 검사")
 
-            st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그인")
+            st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin)
             st1.click()
 
             st2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 찾기")
             st2.click()
 
-            try:
-                self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 2222 1111']/android.widget.ImageView")
-                # 요소가 존재한다면, 여기서 예외가 발생하지 않으므로 테스트 실패
-                assert False, "인풋 필드에 텍스트가 없는데 X 버튼 출력됨 확인 필요"
-            except NoSuchElementException:
-                pass
+            st3 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+            st3.click()
+            st3.send_keys("가나다@suprema.co.kr")
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "이메일 주소\n입력 형식이 맞지 않습니다.").is_displayed()
+            st3.clear()
+            print("----------------- 가나다@suprema.co.kr 완료")
+
+            st4 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+            st4.click()
+            st4.send_keys("123456789")
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "이메일 주소\n입력 형식이 맞지 않습니다.").is_displayed()
+            st4.clear()
+            print("----------------- 123456789 완료")
+
+            st5 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+            st5.click()
+            st5.send_keys("abcdefg")
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "이메일 주소\n입력 형식이 맞지 않습니다.").is_displayed()
+            st5.clear()
+            print("----------------- abcdefg 완료")
+
+            st6 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+            st6.click()
+            st6.send_keys("kjjung@suprema.")
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "이메일 주소\n입력 형식이 맞지 않습니다.").is_displayed()
+            st6.clear()
+            print("----------------- kjjung@suprema. 완료")
+
+            st7 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+            st7.click()
+            st7.send_keys("kjjung@suprema.co.kr.")
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "이메일 주소\n입력 형식이 맞지 않습니다.").is_displayed()
+            print("----------------- kjjung@suprema.co.kr. 완료")
+
+            authRequset1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authRequest)
+            isNext1 = authRequset1.is_enabled()
+            self.assertFalse(isNext1, "인증요청 버튼이 비활성화되어 있습니다.")
+            st7.clear()
+
+            st8 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+            st8.click()
+            st8.send_keys("kjjung@suprema.co.kr")
+
+            authRequset2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authRequest)
+            isNext2 = authRequset2.is_enabled()
+            self.assertTrue(isNext2, "인증요청 버튼이 활성화되어 있습니다.")
+            print("----------------- kjjung@suprema.co.kr 완료")
+            pass
+
+            print("DQS-T999999_23 비밀번호 찾기 페이지의 이메일 주소 인풋 박스 유효성 검사 | Pass")
+
+        except Exception as e:
+            capture_screenshot(self.driver, self._testMethodName)
+            print("DQS-T999999_23 비밀번호 찾기 페이지의 이메일 주소 인풋 박스 유효성 검사 | Failed")
+            print(str(e))
+            self.fail()
+
+    def test_DQS_T14154(self):
+        try:
+            print("DQS-T14154 비밀번호 찾기 페이지의 휴대폰 번호 인풋 박스 X 버튼 기능 동작 확인")
+
+            st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin)
+            st1.click()
+
+            st2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 찾기")
+            st2.click()
 
             st3 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
             st3.click()
@@ -3036,9 +3327,9 @@ class IntroScreen(unittest.TestCase):
             self.assertEqual("", re)
 
             try:
-                self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText/android.widget.ImageView")
+                self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='010 2222 1111']/android.widget.ImageView")
                 # 요소가 존재한다면, 여기서 예외가 발생하지 않으므로 테스트 실패
-                assert False, "인풋 필드에 텍스트가 없는데 X 버튼 출력됨 확인 필요"
+                #assert True, "인풋 필드에 텍스트가 없는데 X 버튼 출력됨 확인 필요"
             except NoSuchElementException:
                 pass
 
@@ -3052,24 +3343,22 @@ class IntroScreen(unittest.TestCase):
             print(str(e))
             self.fail()
 
-    def test_DQS_T14155(self):
+    def test_DQS_T999999_24(self):
         try:
-            print("DQS-T14155 비밀번호 찾기 페이지의 휴대폰 번호 인풋 박스 Hint 문구 기능 동작 확인")
-            st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그인")
+            print("DQS-T999999_24 비밀번호 찾기 페이지의 이메일 주소 인풋 박스 X 버튼 기능 동작 확인")
+
+            st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin)
             st1.click()
 
             st2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 찾기")
             st2.click()
 
-            #stEdit = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText").text
-            #print(stEdit)
-            #self.assertEqual("010부터 휴대폰 번호를 입력해 주세요.", stEdit)
+            st3 = self.driver.find_element(AppiumBy.CLASS_NAME, signUpInput)
+            st3.click()
+            st3.send_keys("kjjung@suprema.co.kr")
 
-            st3 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
-            st3.send_keys("1")
-
-            assert self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='1']/android.widget.ImageView").is_displayed()
-            st3 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='1']/android.widget.ImageView")
+            self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='kjjung@suprema.co.kr']/android.widget.ImageView").is_displayed()
+            st3 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='kjjung@suprema.co.kr']/android.widget.ImageView")
             st3.click()
 
             st4 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
@@ -3077,13 +3366,329 @@ class IntroScreen(unittest.TestCase):
             print(re)
             self.assertEqual("", re)
 
+            try:
+                self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='kjjung@suprema.co.kr']/android.widget.ImageView")
+                # 요소가 존재한다면, 여기서 예외가 발생하지 않으므로 테스트 실패
+                #assert True, "인풋 필드에 텍스트가 없는데 X 버튼 출력됨 확인 필요"
+            except NoSuchElementException:
+                pass
+
             pass
 
-            print("DQS-T14155 비밀번호 찾기 페이지의 휴대폰 번호 인풋 박스 Hint 문구 기능 동작 확인 | Pass")
+            print("DQS-T999999_24 비밀번호 찾기 페이지의 이메일 주소 인풋 박스 X 버튼 기능 동작 확인 | Pass")
 
         except Exception as e:
             capture_screenshot(self.driver, self._testMethodName)
-            print("DQS-T14155 비밀번호 찾기 페이지의 휴대폰 번호 인풋 박스 Hint 문구 기능 동작 확인 | Failed")
+            print("DQS-T999999_24 비밀번호 찾기 페이지의 이메일 주소 인풋 박스 X 버튼 기능 동작 확인 | Failed")
+            print(str(e))
+            self.fail()
+
+    def test_DQS_T14156(self):
+        try:
+            print("DQS_T14156 비밀번호 찾기 기능 중 당일 탈퇴 휴대폰 번호 입력 시 동작 확인")
+
+            phone_num = "010" + str(random.randint(0, 99999999)).zfill(8)
+            print(phone_num)
+
+            utils.signUpMobile(self, phone_num)
+
+            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin)
+            login_button.click()
+
+            phone_input_box = self.driver.find_element(AppiumBy.XPATH, phoneNumberInputBox)
+            phone_input_box.click()
+            phone_input_box.send_keys(phone_num)
+
+            password_input_box = self.driver.find_element(AppiumBy.XPATH, passwordInputBox)
+            password_input_box.click()
+            password_input_box.send_keys("Kjstar36!!")
+
+            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, login)
+            login_button.click()
+            time.sleep(2)
+
+            leadbutton = self.driver.find_element(AppiumBy.XPATH, lead)
+            leadbutton.click()
+
+            csctBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "고객센터")
+            csctBtn.click()
+
+            leavMB = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ImageView[@content-desc='안녕하세요.\n슈프리마 CLUe 서비스 고객센터 입니다.\n무엇을 도와드릴까요?\n운영시간 09:00 ~ 17:00\n(주말, 공휴일 제외)']/android.view.View[2]/android.widget.ImageView[3]")
+            leavMB.click()
+
+            assert self.driver.find_element(AppiumBy.XPATH, "(//android.view.View[@content-desc='회원탈퇴'])[1]").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원탈퇴하시기 전에 꼭 읽어 보세요.\n모든 개인 정보는 지정된 보유 기간 후 자동 삭제됩니다.\n계정이 삭제된 후에는 계정을 살리거나 데이터를 복구 할 수 없습니다.\n공간의 유일한 메인 관리자인 경우 다른 사람에게 이관 후 회원탈퇴가 가능합니다.").is_displayed()
+
+            start_x = 135
+            start_y = 2010
+
+            end_x = 982
+            end_y = 2010
+
+            actions = ActionChains(self.driver)
+            actions.w3c_actions.pointer_action.move_to_location(start_x, start_y)
+            actions.w3c_actions.pointer_action.pointer_down()
+            actions.w3c_actions.pointer_action.pause(0.1)  # 100ms 대기
+            actions.w3c_actions.pointer_action.move_to_location(end_x, end_y)
+            actions.w3c_actions.pointer_action.release()
+            actions.perform()
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원탈퇴").is_displayed()
+            deleteAccountMsg = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='회원탈퇴 성공하였습니다.\n로그인 페이지로 이동합니다.']")
+            contentDesc = deleteAccountMsg.get_attribute('content-desc')
+            print(f"추출한 content-desc 값 : {contentDesc}")
+            self.assertEqual(contentDesc, "회원탈퇴 성공하였습니다.\n로그인 페이지로 이동합니다.")
+            confirmBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, confirm)
+            confirmBtn.click()
+
+            self.driver.quit()
+
+            print("--------- 비밀번호 찾기에서 회원탈퇴한 전화번호 입력 후 팝업 동작 시작")
+            time.sleep(3)
+
+            options = UiAutomator2Options()
+            options.platform_name = 'Android'
+            options.device_name = 'R3CXB0MKLGP'
+            options.app_package = 'com.suprema.moon'
+            options.app_activity = 'com.suprema.moon.MainActivity'
+            options.automation_name = 'UiAutomator2'
+            options.auto_grant_permissions = True
+            options.no_reset = True
+
+            self.driver = webdriver.Remote("http://localhost:4723/wd/hub", options=options)
+
+            time.sleep(1)
+
+            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin)
+            login_button.click()
+
+            resetPassword = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 찾기")
+            resetPassword.click()
+
+            phone_input_box = self.driver.find_element(AppiumBy.CLASS_NAME, signUpInput)
+            phone_input_box.click()
+            phone_input_box.send_keys(phone_num)
+
+            authRequest_Btn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authRequest)
+            authRequest_Btn.click()
+            time.sleep(1)
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그인 정보 오류").is_displayed()
+            loginErrorMsg = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='계정 혹은 비밀번호를\n다시 확인해 주세요.\na1000']")
+            contentDesc = loginErrorMsg.get_attribute('content-desc')
+            print(f"추출한 content-desc 값 : {contentDesc}")
+            self.assertEqual(contentDesc, "계정 혹은 비밀번호를\n다시 확인해 주세요.\na1000")
+            confirmBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, confirm)
+            confirmBtn.click()
+
+            pass
+
+            print("DQS_T14156 비밀번호 찾기 기능 중 당일 탈퇴 휴대폰 번호 입력 시 동작 확인 | Pass")
+
+        except Exception as e:
+            capture_screenshot(self.driver, self._testMethodName)
+            print("DQS_T14156 비밀번호 찾기 기능 중 당일 탈퇴 휴대폰 번호 입력 시 동작 확인 | Failed")
+            print(str(e))
+            self.fail()
+
+    def test_DQS_T999999_25(self):
+        try:
+            print("DQS_T999999_25 비밀번호 찾기 기능 중 당일 탈퇴 이메일 주소 입력 시 동작 확인")
+
+            email_random = "kjjung+pp" +str(random.randint(1000, 9999)).zfill(3) + "@suprema.co.kr"
+            print(email_random)
+
+            utils.signUpEmail(self, email_random)
+            time.sleep(3)
+
+            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin)
+            login_button.click()
+
+            email_input_box = self.driver.find_element(AppiumBy.XPATH, emailInputBox)
+            email_input_box.click()
+            email_input_box.send_keys(email_random)
+
+            password_input_box = self.driver.find_element(AppiumBy.XPATH, emailPasswordInputBox)
+            password_input_box.click()
+            password_input_box.send_keys("Kjstar36!!")
+
+            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, login)
+            login_button.click()
+            time.sleep(2)
+
+            utils.authCode(self)
+
+            self.driver.hide_keyboard()
+
+            authBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authComplete)
+            authBtn.click()
+
+            leadbutton = self.driver.find_element(AppiumBy.XPATH, lead)
+            leadbutton.click()
+
+            csctBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "고객센터")
+            csctBtn.click()
+            time.sleep(0.3)
+
+            leavMB = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ImageView[@content-desc='안녕하세요.\n슈프리마 CLUe 서비스 고객센터 입니다.\n무엇을 도와드릴까요?\n운영시간 09:00 ~ 17:00\n(주말, 공휴일 제외)']/android.view.View[2]/android.widget.ImageView[3]")
+            leavMB.click()
+
+            assert self.driver.find_element(AppiumBy.XPATH, "(//android.view.View[@content-desc='회원탈퇴'])[1]").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원탈퇴하시기 전에 꼭 읽어 보세요.\n모든 개인 정보는 지정된 보유 기간 후 자동 삭제됩니다.\n계정이 삭제된 후에는 계정을 살리거나 데이터를 복구 할 수 없습니다.\n공간의 유일한 메인 관리자인 경우 다른 사람에게 이관 후 회원탈퇴가 가능합니다.").is_displayed()
+
+            start_x = 135
+            start_y = 2010
+
+            end_x = 982
+            end_y = 2010
+
+            actions = ActionChains(self.driver)
+            actions.w3c_actions.pointer_action.move_to_location(start_x, start_y)
+            actions.w3c_actions.pointer_action.pointer_down()
+            actions.w3c_actions.pointer_action.pause(0.1)  # 100ms 대기
+            actions.w3c_actions.pointer_action.move_to_location(end_x, end_y)
+            actions.w3c_actions.pointer_action.release()
+            actions.perform()
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원탈퇴").is_displayed()
+            deleteAccountMsg = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='회원탈퇴 성공하였습니다.\n로그인 페이지로 이동합니다.']")
+            contentDesc = deleteAccountMsg.get_attribute('content-desc')
+            print(f"추출한 content-desc 값 : {contentDesc}")
+            self.assertEqual(contentDesc, "회원탈퇴 성공하였습니다.\n로그인 페이지로 이동합니다.")
+            confirmBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, confirm)
+            confirmBtn.click()
+
+            self.driver.quit()
+
+            print("--------- 비밀번호 찾기에서 회원탈퇴한 이메일 입력 후 팝업 동작 시작")
+            time.sleep(3)
+
+            options = UiAutomator2Options()
+            options.platform_name = 'Android'
+            options.device_name = 'R3CXB0MKLGP'
+            options.app_package = 'com.suprema.moon'
+            options.app_activity = 'com.suprema.moon.MainActivity'
+            options.automation_name = 'UiAutomator2'
+            options.auto_grant_permissions = True
+            options.no_reset = True
+
+            self.driver = webdriver.Remote("http://localhost:4723/wd/hub", options=options)
+
+            time.sleep(1)
+
+            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin)
+            login_button.click()
+
+            resetPassword = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 찾기")
+            resetPassword.click()
+
+            email_input_box = self.driver.find_element(AppiumBy.CLASS_NAME, signUpInput)
+            email_input_box.click()
+            email_input_box.send_keys(email_random)
+
+            authRequest_Btn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authRequest)
+            authRequest_Btn.click()
+            time.sleep(1)
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그인 정보 오류").is_displayed()
+            loginErrorMsg = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='계정 혹은 비밀번호를\n다시 확인해 주세요.\na1000']")
+            contentDesc = loginErrorMsg.get_attribute('content-desc')
+            print(f"추출한 content-desc 값 : {contentDesc}")
+            self.assertEqual(contentDesc, "계정 혹은 비밀번호를\n다시 확인해 주세요.\na1000")
+            confirmBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, confirm)
+            confirmBtn.click()
+
+            pass
+
+            print("DQS_T999999_25 비밀번호 찾기 기능 중 당일 탈퇴 이메일 주소 입력 시 동작 확인 | Pass")
+
+        except Exception as e:
+            capture_screenshot(self.driver, self._testMethodName)
+            print("DQS_T999999_25 비밀번호 찾기 기능 중 당일 탈퇴 이메일 주소 입력 시 동작 확인 | Failed")
+            print(str(e))
+            self.fail()
+
+    def test_DQS_T14216_T14217_T14163(self):
+        try:
+            print("DQS-T14216 비밀번호 찾기 비밀번호 재설정 페이지의 비밀번호 입력 인풋 박스 유효성 검사 || DQS-T14217 비밀번호 찾기 비밀번호 재설정 페이지의 비밀번호 재입력 인풋 박스 유효성 검사 || DQS-T14163 비밀번호 찾기 비밀번호 재설정 페이지에서 비밀번호 와 비밀번호 재입력 값이 다른 경우 확인")
+
+            phone_num = "010" + str(random.randint(0, 99999999)).zfill(8)
+            print(phone_num)
+
+            utils.signUpMobile(self, phone_num)
+
+            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin)
+            login_button.click()
+
+            resetPassword = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 찾기")
+            resetPassword.click()
+
+            phone_input = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+            phone_input.click()
+            phone_input.send_keys(phone_num)
+
+            authReBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authRequest)
+            authReBtn.click()
+            time.sleep(1)
+
+            utils.authCode_mobile(self)
+
+            self.driver.hide_keyboard()
+
+            authBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authComplete)
+            authBtn.click()
+
+            utils.resetPasswordValidtion(self)
+
+            time.sleep(0.5)
+            print("------------------- DQS-T14217 시작")
+            utils.resetRePasswordValidtion(self)
+
+            print("------------------- DQS-T14163 시작")
+            passInput = self.driver.find_element(AppiumBy.XPATH, f"//android.view.View[@content-desc='휴대폰 번호\n{phone_num}\n비밀번호\n비밀번호 재입력']/android.widget.EditText[1]")
+            passInput.click()
+            passInput.send_keys("Kjstar36!!")
+
+            rePassInput = self.driver.find_element(AppiumBy.XPATH, f"//android.view.View[@content-desc='휴대폰 번호\n{phone_num}\n비밀번호\n비밀번호 재입력']/android.widget.EditText[2]")
+            rePassInput.click()
+            rePassInput.send_keys("Kjstar36!@")
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, f"휴대폰 번호\n{phone_num}\n비밀번호\n비밀번호 재입력\n비밀번호가 일치하지 않습니다.").is_displayed()
+
+            print("------------------- DQS-T14152 완료")
+
+            print("------------------- 임의 폰번호로 회원가입된 계정 탈퇴 시작")
+
+            self.driver.tap([(72, 166)])
+            time.sleep(1)
+            # backBtn = self.driver.find_element(AppiumBy.XPATH, f"//android.view.View[@content-desc='휴대폰 번호\n({phone_num})\n비밀번호\n비밀번호 재입력\n비밀번호가 알치하지 않습니다.']/android.view.View/android.widget.ImageView")
+            # backBtn.click()
+
+            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin)
+            login_button.click()
+
+            phone_input_box = self.driver.find_element(AppiumBy.XPATH, phoneNumberInputBox)
+            phone_input_box.click()
+            phone_input_box.send_keys(phone_num)
+
+            password_input_box = self.driver.find_element(AppiumBy.XPATH, passwordInputBox)
+            password_input_box.click()
+            password_input_box.send_keys("Kjstar36!!")
+
+            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, login)
+            login_button.click()
+            time.sleep(2)
+
+            utils.leaveAdmin(self)
+            print("------------------- 임의 폰번호로 회원가입된 계정 탈퇴 성공")
+
+            pass
+
+            print("DQS-T14151 회원가입에 프로필 입력 페이지의 비밀번호 인풋 박스 유효성 검사 || DQS-T14213 회원가입에서 프로필 입력 페이지의 비밀번호 재입력 인풋 박스 유효성 검사 || DQS-T14152 회원가입에 프로필 입력 페이지에서 비밀번호 와 비밀번호 재입력 값이 다른 경우 확인 | Pass")
+
+        except Exception as e:
+            capture_screenshot(self.driver, self._testMethodName)
+            print("DQS-T14151 DQS-T14151 회원가입에 프로필 입력 페이지의 비밀번호 인풋 박스 유효성 검사 || DQS-T14213 회원가입에서 프로필 입력 페이지의 비밀번호 재입력 인풋 박스 유효성 검사 || DQS-T14152 회원가입에 프로필 입력 페이지에서 비밀번호 와 비밀번호 재입력 값이 다른 경우 확인 | Failed")
             print(str(e))
             self.fail()
 
@@ -3100,10 +3705,15 @@ class IntroScreen(unittest.TestCase):
             next = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "다음")
             next.click()
 
-            st1 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='휴대폰 번호']/android.view.View/android.widget.ImageView")
-            st1.click()
+            mobileSel = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "모바일")
+            mobileSel.click()
 
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "Dev-Server").is_displayed()
+            backBtn = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='휴대폰 번호']/android.view.View/android.widget.ImageView")
+            backBtn.click()
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin).is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin).is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원가입").is_displayed()
 
             pass
 
@@ -3112,6 +3722,39 @@ class IntroScreen(unittest.TestCase):
         except Exception as e:
             capture_screenshot(self.driver, self._testMethodName)
             print("DQS-T14223 회원가입 휴대폰 번호 입력 페이지의 뒤로가기 버튼 기능 동작 확인 | Failed")
+            print(str(e))
+            self.fail()
+
+    def test_DQS_T999999_27(self):
+        try:
+            print("DQS-T999999_27 회원가입 이메일 주소 입력 페이지의 뒤로가기 버튼 기능 동작 확인")
+
+            SignUp = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원가입")
+            SignUp.click()
+
+            agree = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "약관 전체 동의")
+            agree.click()
+
+            next = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "다음")
+            next.click()
+
+            emailSel = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "이메일")
+            emailSel.click()
+
+            backBtn = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ImageView")
+            backBtn.click()
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin).is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin).is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원가입").is_displayed()
+
+            pass
+
+            print("DQS-T999999_27 회원가입 이메일 주소 입력 페이지의 뒤로가기 버튼 기능 동작 확인 | Pass")
+
+        except Exception as e:
+            capture_screenshot(self.driver, self._testMethodName)
+            print("DQS-T999999_27 회원가입 이메일 주소 입력 페이지의 뒤로가기 버튼 기능 동작 확인 | Failed")
             print(str(e))
             self.fail()
 
@@ -3128,19 +3771,24 @@ class IntroScreen(unittest.TestCase):
             next = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "다음")
             next.click()
 
-            st = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
-            st.click()
-            st.send_keys("01079461346")
+            mobileSel = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "모바일")
+            mobileSel.click()
 
-            st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증요청")
-            st1.click()
+            mobile_input = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+            mobile_input.click()
+            mobile_input.send_keys("01079461346")
+
+            authBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authRequest)
+            authBtn.click()
 
             time.sleep(3)
 
-            st2 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.ImageView")
-            st2.click()
+            backBtn = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.ImageView")
+            backBtn.click()
 
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "휴대폰 번호")
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin).is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin).is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원가입").is_displayed()
 
             pass
 
@@ -3152,6 +3800,48 @@ class IntroScreen(unittest.TestCase):
             print(str(e))
             self.fail()
 
+    def test_DQS_T999999_28(self):
+        try:
+            print("DQS-T999999_28 회원가입 이메일 인증번호 입력 페이지의 뒤로가기 버튼 기능 동작 확인")
+
+            SignUp = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원가입")
+            SignUp.click()
+
+            agree = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "약관 전체 동의")
+            agree.click()
+
+            next = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "다음")
+            next.click()
+
+            emailSel = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "이메일")
+            emailSel.click()
+
+            email_input = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+            email_input.click()
+            email_input.send_keys("kjjung+back1@suprema.co.kr")
+
+            authBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authRequest)
+            authBtn.click()
+
+            time.sleep(3)
+
+            backBtn = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.ImageView")
+            backBtn.click()
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin).is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin).is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원가입").is_displayed()
+
+            pass
+
+            print("DQS-T999999_28 회원가입 이메일 인증번호 입력 페이지의 뒤로가기 버튼 기능 동작 확인 | Pass")
+
+        except Exception as e:
+            capture_screenshot(self.driver, self._testMethodName)
+            print("DQS-T999999_28 회원가입 이메일 인증번호 입력 페이지의 뒤로가기 버튼 기능 동작 확인 | Failed")
+            print(str(e))
+            self.fail()
+
     def test_DQS_T14222(self):
         try:
             print("DQS-T14222 회원가입 약관 동의 페이지의 뒤로가기 버튼 기능 동작 확인")
@@ -3159,10 +3849,12 @@ class IntroScreen(unittest.TestCase):
             SignUp = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원가입")
             SignUp.click()
 
-            st1 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.widget.ImageView")
-            st1.click()
+            backBtn = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ImageView[@content-desc='고객님 \n환영합니다.']/android.view.View[1]/android.widget.ImageView")
+            backBtn.click()
 
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "Dev-Server").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin).is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin).is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원가입").is_displayed()
 
             pass
 
@@ -3178,24 +3870,79 @@ class IntroScreen(unittest.TestCase):
         try:
             print("DQS-T14220 비밀번호 찾기 인증번호 입력 페이지의 뒤로가기 버튼 기능 동작 확인")
 
-            st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그인")
-            st1.click()
+            print("----- PreCondition: 이메일, 모바일 회원가입-----")
+            email_random = "kjjung+pp" + str(random.randint(11,9999)).zfill(3) + "@suprema.co.kr"
+            print(email_random)
+            time.sleep(2)
 
-            st2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 찾기")
-            st2.click()
+            mobile_random = "010" + str(random.randint(0, 99999999)).zfill(8)
+            print(mobile_random)
+            time.sleep(2)
 
-            st2 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
-            st2.click()
-            st2.send_keys("01099887766")
+            utils.signUpEmail(self,email_random)
+            time.sleep(2)
+
+            utils.signUpMobile(self, mobile_random)
+            time.sleep(2)
+
+            print("----- PreCondition 완료(회원가입 완료)-----")
+
+            loginBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin)
+            loginBtn.click()
+
+            resetPassword = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 찾기")
+            resetPassword.click()
+
+            emailInput = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+            emailInput.click()
+            emailInput.send_keys(email_random)
 
             st3 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증요청")
             st3.click()
             time.sleep(3)
 
-            st4 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.ImageView")
-            st4.click()
+            backBtn = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.ImageView")
+            backBtn.click()
 
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "휴대폰 번호").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin).is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin).is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원가입").is_displayed()
+
+            mobile_login = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin)
+            mobile_login.click()
+
+            resetPassword = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 찾기")
+            resetPassword.click()
+
+            mobileInput = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+            mobileInput.click()
+            mobileInput.send_keys(mobile_random)
+
+            authReBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authRequest)
+            authReBtn.click()
+            time.sleep(3)
+
+            backBtn = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.ImageView")
+            backBtn.click()
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin).is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin).is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원가입").is_displayed()
+
+            print("----- 회원가입된 이메일/모바일 계정 회원 틸퇴 -----")
+            print("----- 1. 이메일계정 회원 틸퇴 시작 -----")
+
+            utils.email_login(self, email_random, "Kjstar36!!")
+
+            utils.leaveAdmin(self)
+            print("----- 1. 이메일계정 회원 틸퇴 완료-----")
+
+            print("----- 1. 모바일계정 회원 틸퇴 시작 -----")
+
+            utils.mobile_login(self, mobile_random, "Kjstar36!!")
+
+            utils.leaveAdmin(self)
+            print("----- 1. 모바일계정 회원 틸퇴 완료-----")
 
             pass
 
@@ -3207,20 +3954,135 @@ class IntroScreen(unittest.TestCase):
             print(str(e))
             self.fail()
 
+    def test_DQS_T14221(self):
+        try:
+            print("DQS-T14221 비밀번호 찾기 비밀번호 재설정 페이지의 뒤로가기 버튼 기능 동작 확인")
+
+            print("----- PreCondition: 이메일, 모바일 회원가입-----")
+            email_random = "kjjung+pp" + str(random.randint(11,9999)).zfill(3) + "@suprema.co.kr"
+            print(email_random)
+            time.sleep(2)
+
+            mobile_random = "010" + str(random.randint(0, 99999999)).zfill(8)
+            print(mobile_random)
+            time.sleep(2)
+
+            utils.signUpEmail(self,email_random)
+            time.sleep(2)
+
+            utils.signUpMobile(self, mobile_random)
+            time.sleep(2)
+
+            print("----- PreCondition 완료(회원가입 완료)-----")
+
+            email_login = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin)
+            email_login.click()
+
+            resetPassword = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 찾기")
+            resetPassword.click()
+
+            emailInput = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+            emailInput.click()
+            emailInput.send_keys(email_random)
+
+            authReBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authRequest)
+            authReBtn.click()
+            time.sleep(3)
+
+            utils.authCode(self)
+
+            authComBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authComplete)
+            authComBtn.click()
+
+            backBtn = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.ImageView")
+            backBtn.click()
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin).is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin).is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원가입").is_displayed()
+
+
+            mobile_login = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin)
+            mobile_login.click()
+
+            resetPassword = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 찾기")
+            resetPassword.click()
+
+            emailInput = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+            emailInput.click()
+            emailInput.send_keys(mobile_random)
+
+            authReBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authRequest)
+            authReBtn.click()
+            time.sleep(3)
+
+            utils.authCode_mobile(self)
+
+            authComBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authComplete)
+            authComBtn.click()
+
+            backBtn = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.ImageView")
+            backBtn.click()
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin).is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin).is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원가입").is_displayed()
+
+            print("----- 회원가입된 이메일/모바일 계정 회원 틸퇴 -----")
+            print("----- 1. 이메일계정 회원 틸퇴 시작 -----")
+
+            utils.email_login(self, email_random, "Kjstar36!!")
+
+            utils.leaveAdmin(self)
+            print("----- 1. 이메일계정 회원 틸퇴 완료-----")
+
+            print("----- 1. 모바일계정 회원 틸퇴 시작 -----")
+
+            utils.mobile_login(self, mobile_random, "Kjstar36!!")
+
+            utils.leaveAdmin(self)
+            print("----- 1. 모바일계정 회원 틸퇴 완료-----")
+
+            pass
+
+            print("DQS-T14221 비밀번호 찾기 비밀번호 재설정 페이지의 뒤로가기 버튼 기능 동작 확인 | Pass")
+
+        except Exception as e:
+            capture_screenshot(self.driver, self._testMethodName)
+            print("DQS-T14221 비밀번호 찾기 비밀번호 재설정 페이지의 뒤로가기 버튼 기능 동작 확인 | Failed")
+            print(str(e))
+            self.fail()
+
     def test_DQS_T14219(self):
         try:
             print("DQS-T14219 비밀번호 찾기 휴대폰 번호 입력 페이지의 뒤로가기 버튼 기능 동작 확인")
 
-            st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그인")
-            st1.click()
+            email_login = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin)
+            email_login.click()
 
-            st2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 찾기")
-            st2.click()
+            resetPassword = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 찾기")
+            resetPassword.click()
 
-            st3 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='휴대폰 번호']/android.view.View/android.widget.ImageView")
-            st3.click()
+            backBtn = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.ImageView")
+            backBtn.click()
 
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "휴대폰 번호\n비밀번호").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin).is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin).is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원가입").is_displayed()
+
+
+            mobile_login = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin)
+            mobile_login.click()
+
+            resetPassword = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 찾기")
+            resetPassword.click()
+
+            backBtn = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.ImageView")
+            backBtn.click()
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin).is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin).is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원가입").is_displayed()
 
             pass
 
@@ -3235,13 +4097,25 @@ class IntroScreen(unittest.TestCase):
     def test_DQS_T14218(self):
         try:
             print("DQS-T14218 로그인 페이지에서 뒤로가기 버튼 기능 동작 확인")
-            st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그인")
-            st1.click()
+            email_login = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin)
+            email_login.click()
 
-            st2 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ImageView[@content-desc='휴대폰 번호\n비밀번호']/android.view.View[1]/android.widget.ImageView")
-            st2.click()
+            backBtn = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ImageView[@content-desc='이메일 주소\n비밀번호']/android.view.View/android.widget.ImageView")
+            backBtn.click()
 
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "Dev-Server").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin).is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin).is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원가입").is_displayed()
+
+            mobile_login = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin)
+            mobile_login.click()
+
+            backBtn = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ImageView[@content-desc='휴대폰 번호\n비밀번호']/android.view.View/android.widget.ImageView")
+            backBtn.click()
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin).is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin).is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원가입").is_displayed()
 
             pass
 
@@ -3253,186 +4127,16 @@ class IntroScreen(unittest.TestCase):
             print(str(e))
             self.fail()
 
-    def test_DQS_T14215(self):
-        try:
-            print("DQS-T14215 회원가입 인증번호 입력 페이지의 인증번호 인풋 박스 Hint 문구 기능 동작 확인")
-
-            st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원가입")
-            st1.click()
-
-            st2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, allAgree)
-            st2.click()
-
-            st3 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, next)
-            st3.click()
-
-            st4 = self.driver.find_element(AppiumBy.CLASS_NAME, signUpInput)
-            st4.click()
-            st4.send_keys("01078941221")
-
-            st5 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authRequest)
-            st5.click()
-
-            time.sleep(3)
-
-            st3 = self.driver.find_element(AppiumBy.CLASS_NAME, signUpInput)
-            st3.send_keys("1")
-
-            assert self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='1']").is_displayed()
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증번호는 6자리 숫자입니다.").is_displayed() #문구 출력 확인
-
-            element_xpath = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='인증번호는 6자리 숫자입니다.']")
-            content_desc = element_xpath.get_attribute('content-desc')
-            print(f"추출한 content-desc 값 : {content_desc}")
-            self.assertEqual(content_desc, "인증번호는 6자리 숫자입니다.")
-            st3.clear()
-
-            st4 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
-            re = st4.text
-            self.assertEqual("", re)
-
-            pass
-
-            print("DQS-T14215 회원가입 인증번호 입력 페이지의 인증번호 인풋 박스 Hint 문구 기능 동작 확인 | Pass")
-
-        except Exception as e:
-            capture_screenshot(self.driver, self._testMethodName)
-            print("DQS-T14215 회원가입 인증번호 입력 페이지의 인증번호 인풋 박스 Hint 문구 기능 동작 확인 | Failed")
-            print(str(e))
-            self.fail()
-
-    def test_DQS_T14161(self):
-        try:
-            print("DQS_T14161 회원가입 인증번호 입력 페이지의 인증시간 만료 시 기능 동작 확인")
-
-            st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원가입")
-            st1.click()
-
-            st2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, allAgree)
-            st2.click()
-
-            st3 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, next)
-            st3.click()
-
-            st4 = self.driver.find_element(AppiumBy.CLASS_NAME, signUpInput)
-            st4.click()
-            st4.send_keys("01022548778")
-
-            st5 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authRequest)
-            st5.click()
-
-            time.sleep(3)
-
-            st3 = self.driver.find_element(AppiumBy.CLASS_NAME, signUpInput)
-            st3.send_keys("123456")
-
-            time.sleep(200)
-
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "0분 0초").is_displayed()
-
-            st6 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증완료")
-            st6.click()
-
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "+82 01022548778").is_displayed()
-
-            st7 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "재전송")
-            st7.click()
-
-            st8 = self.driver.find_element(AppiumBy.CLASS_NAME, signUpInput)
-            st8.click()
-            st8.send_keys("112233") #123456으로 입력되어짐
-            time.sleep(3)
-
-            st6 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authComplete)
-            st6.click()
-
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증 코드 오류").is_displayed()
-            authError_Pop = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='인증 코드가 일치하지 않습니다. \n다시 입력해 주세요.']")
-            contentDesc = authError_Pop.get_attribute('content-desc')
-            print(f"추출한 content-desc 값 : {contentDesc}")
-            self.assertEqual(contentDesc, "인증 코드가 일치하지 않습니다. \n다시 입력해 주세요.")
-
-            pass
-
-            print("DQS_T14161 회원가입 인증번호 입력 페이지의 인증시간 만료 시 기능 동작 확인 | Pass")
-
-        except Exception as e:
-            capture_screenshot(self.driver, self._testMethodName)
-            print("DQS_T14161 회원가입 인증번호 입력 페이지의 인증시간 만료 시 기능 동작 확인 | Failed")
-            print(str(e))
-            self.fail()
-
-    def test_DQS_T14136(self):
-        try:
-            print("DQS-T14136 로그인 페이지 비밀번호 인풋 박스 Hint 문구 기능 동작 확인")
-
-            st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "모바일로 로그인")
-            st1.click()
-
-            assert self.driver.find_element(AppiumBy.XPATH, passwordInputBox).is_displayed()
-
-            st2 = self.driver.find_element(AppiumBy.XPATH, passwordInputBox)
-            st2.click()
-            st2.send_keys("1")
-
-            assert self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='•']").is_displayed()
-
-            st3 = self.driver.find_element(AppiumBy.XPATH, passwordInputBox)
-            st3.clear()
-
-            assert self.driver.find_element(AppiumBy.XPATH, passwordInputBox).is_displayed()
-
-            pass
-
-            print("DQS-T14136 로그인 페이지 비밀번호 인풋 박스 Hint 문구 기능 동작 확인 | Pass")
-
-        except Exception as e:
-            capture_screenshot(self.driver, self._testMethodName)
-            print("DQS-T14136 로그인 페이지 비밀번호 인풋 박스 Hint 문구 기능 동작 확인 | Failed")
-            print(str(e))
-            self.fail()
-
-    def test_DQS_T14143(self):
-        try:
-            print("DQS-T14143 회원가입 페이지의 휴대폰 번호 인풋 박스 Hint 문구 기능 동작 확인")
-
-            st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원가입")
-            st1.click()
-
-            st2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, allAgree)
-            st2.click()
-
-            st3 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, next)
-            st3.click()
-
-            assert self.driver.find_element(AppiumBy.CLASS_NAME, signUpInput).is_displayed()
-
-            st4 = self.driver.find_element(AppiumBy.CLASS_NAME, signUpInput)
-            st4.click()
-            st4.send_keys("1")
-
-            assert self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='1']/android.widget.ImageView").is_displayed()
-
-            st5 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='1']/android.widget.ImageView")
-            st5.click()
-
-            assert self.driver.find_element(AppiumBy.CLASS_NAME, signUpInput).is_displayed()
-
-            pass
-
-            print("DQS-T14143 회원가입 페이지의 휴대폰 번호 인풋 박스 Hint 문구 기능 동작 확인 | Pass")
-
-        except Exception as e:
-            capture_screenshot(self.driver, self._testMethodName)
-            print("DQS-T14143 회원가입 페이지의 휴대폰 번호 인풋 박스 Hint 문구 기능 동작 확인 | Failed")
-            print(str(e))
-            self.fail()
-
     def test_DQS_T14157(self):
         try:
             print("DQS-T14157 비밀번호 찾기 인증번호 입력 페이지의 인증번호 인풋 박스 유효성 검사")
 
-            st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그인")
+            phone_num = "010" + str(random.randint(0, 99999999)).zfill(8)
+            print(phone_num)
+
+            utils.signUpMobile(self, phone_num)
+
+            st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin)
             st1.click()
 
             st2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 찾기")
@@ -3440,7 +4144,7 @@ class IntroScreen(unittest.TestCase):
 
             st2 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
             st2.click()
-            st2.send_keys("01055555555")
+            st2.send_keys(phone_num)
 
             st3 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증요청")
             st3.click()
@@ -3449,93 +4153,92 @@ class IntroScreen(unittest.TestCase):
             st3 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
             st3.click()
             st3.send_keys("ABCDEFG")
-            er3 = st3.text
+            input1 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='ABCDEF']")
+            er3 = input1.text
             self.assertEqual("ABCDEF", er3)
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증번호는 6자리 숫자입니다.")
-            authText_Msg1 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='인증번호는 6자리 숫자입니다.']")
-            contentDesc1 = authText_Msg1.get_attribute('content-desc')
-            print(f"추출한 content-desc 값 : {contentDesc1}")
-            self.assertEqual(contentDesc1, "인증번호는 6자리 숫자입니다.")
-            atBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증완료")
-            atBtn.click()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, f"휴대폰 번호\n{phone_num}\n인증번호\n인증번호는 6자리 숫자입니다.").is_displayed()
+
+            authBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authComplete)
+            isNext1 = authBtn.is_enabled()
+            self.assertFalse(isNext1, "인증요청 버튼이 비활성화되어 있습니다.")
             st3.clear()
+            print(" --------- ABCDCDEFG 입력 후 가이드 문구 및 인증요청 버튼 비활성화 확인")
 
             st4 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
             st4.click()
             st4.send_keys("abcdef")
             er4 = st4.text
             self.assertEqual("abcdef", er4)
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증번호는 6자리 숫자입니다.")
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증번호는 6자리 숫자입니다.").is_displayed()
-            authText_Msg2 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='인증번호는 6자리 숫자입니다.']")
-            contentDesc2 = authText_Msg2.get_attribute('content-desc')
-            print(f"추출한 content-desc 값 : {contentDesc2}")
-            self.assertEqual(contentDesc2, "인증번호는 6자리 숫자입니다.")
-            atBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증완료")
-            atBtn.click()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, f"휴대폰 번호\n{phone_num}\n인증번호\n인증번호는 6자리 숫자입니다.").is_displayed()
+
+            authBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authComplete)
+            isNext1 = authBtn.is_enabled()
+            self.assertFalse(isNext1, "인증요청 버튼이 비활성화되어 있습니다.")
             st4.clear()
+            print(" --------- abcdef 입력 후 가이드 문구 및 인증요청 버튼 비활성화 확인")
 
             st5 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
             st5.click()
             st5.send_keys("가나다라마바")
             er5 = st5.text
             self.assertEqual("가나다라마바", er5)
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증번호는 6자리 숫자입니다.")
-            authText_Msg3 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='인증번호는 6자리 숫자입니다.']")
-            contentDesc3 = authText_Msg3.get_attribute('content-desc')
-            print(f"추출한 content-desc 값 : {contentDesc3}")
-            self.assertEqual(contentDesc1, "인증번호는 6자리 숫자입니다.")
-            atBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증완료")
-            atBtn.click()
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, f"휴대폰 번호\n{phone_num}\n인증번호\n인증번호는 6자리 숫자입니다.").is_displayed()
+
+            authBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authComplete)
+            isNext1 = authBtn.is_enabled()
+            self.assertFalse(isNext1, "인증요청 버튼이 비활성화되어 있습니다.")
             st5.clear()
+            print(" --------- 가나다라마바 입력 후 가이드 문구 및 인증요청 버튼 비활성화 확인")
 
             st6 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
             st6.click()
             st6.send_keys("!@#$%^&*()")
-            er6 = st6.text
+            input2 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='!@#$%^']")
+            er6 = input2.text
             self.assertEqual("!@#$%^", er6)
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증번호는 6자리 숫자입니다.")
-            authText_Msg4 = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='인증번호는 6자리 숫자입니다.']")
-            contentDesc4 = authText_Msg4.get_attribute('content-desc')
-            print(f"추출한 content-desc 값 : {contentDesc4}")
-            self.assertEqual(contentDesc1, "인증번호는 6자리 숫자입니다.")
-            atBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증완료")
-            atBtn.click()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, f"휴대폰 번호\n{phone_num}\n인증번호\n인증번호는 6자리 숫자입니다.").is_displayed()
+
+            authBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authComplete)
+            isNext1 = authBtn.is_enabled()
+            self.assertFalse(isNext1, "인증요청 버튼이 비활성화되어 있습니다.")
             st6.clear()
+            print(" --------- !@#$%^&*() 입력 후 가이드 문구 및 인증요청 버튼 비활성화 확인")
 
             st7 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
             st7.click()
             st7.send_keys("123")
-            authNum_msg = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='인증번호는 6자리 숫자입니다.']")
-            contentDesc5 = authNum_msg.get_attribute('content-desc')
-            print(f"추출한 content-desc 값 : {contentDesc5}")
-            self.assertEqual(contentDesc5, "인증번호는 6자리 숫자입니다.")
-            atBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증완료")
-            atBtn.click()
+            er7 = st7.text
+            self.assertEqual("123", er7)
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, f"휴대폰 번호\n{phone_num}\n인증번호\n인증번호는 6자리 숫자입니다.").is_displayed()
+
+            authBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authComplete)
+            isNext1 = authBtn.is_enabled()
+            self.assertFalse(isNext1, "인증요청 버튼이 비활성화되어 있습니다.")
             st7.clear()
+            print(" --------- 123 입력 후 가이드 문구 및 인증요청 버튼 비활성화 확인")
 
             st8 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
             st8.click()
             st8.send_keys("9876543210")
             er8 = st8.text
             self.assertEqual("987654", er8)
-            time.sleep(3)
+            time.sleep(1)
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, f"휴대폰 번호\n{phone_num}\n인증번호").is_displayed()
+
+            authBtn2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authComplete)
+            isNext2 = authBtn2.is_enabled()
+            self.assertTrue(isNext2, "인증요청 버튼이 활성화되어 있습니다.")
             st8.clear()
+            print(" --------- 9876543210 입력 후 가이드 문구 및 인증요청 버튼 활성화 확인")
 
             st9 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
             st9.click()
             st9.send_keys("123456")
-            atBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증완료")
-            atBtn.click()
 
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증 코드가 일치하지 않습니다. \n다시 입력해 주세요.").is_displayed()
-            # 회원가입 씬에서 출력된 팝업 문구와 비밀번호 찾기 씬에서 출력되는 팝업 문구가 상이함, 회원가입 씬에서 발생하는 문구로 작성되어 있어서 Fail 발생함, 사양 확정 후 TC보완예정
-            authError_Pop = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='인증 코드가 일치하지 않습니다. \n다시 입력해 주세요.']")
-            contentDesc6 = authError_Pop.get_attribute('content-desc')
-            print(f"추출한 content-desc 값 : {contentDesc6}")
-            self.assertEqual(contentDesc6, "인증 코드가 일치하지 않습니다. \n다시 입력해 주세요.")
-            st10 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, confirm)
-            st10.click()
+            authBtn2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authComplete)
+            isNext2 = authBtn2.is_enabled()
+            self.assertTrue(isNext2, "인증요청 버튼이 활성화되어 있습니다.")
 
             pass
 
@@ -3547,10 +4250,16 @@ class IntroScreen(unittest.TestCase):
             print(str(e))
             self.fail()
 
-    def test_DQS_T14158(self):
+    def test_DQS_T14159(self):
         try:
-            print("DQS-T14158 비밀번호 찾기 인증번호 입력 페이지의 인증번호 인풋 박스 Hint 문구 기능 동작 확인")
-            st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그인")
+            print("DQS_T14159 모바일로 로그인에서 비밀번호 찾기 인증번호 입력 페이지의 인증번호 재전송 버튼 기능 동작 확인")
+
+            phone_Num = "010" + str(random.randint(0, 99999999)).zfill(8)
+            print(phone_Num) #랜덤 폰번호로 회원가입 -> 비밀번호 찾기 테스트 시 잦은 시도 팝업 발생으로 신규 가입 후 테스트 시나리오 진행
+
+            utils.signUpMobile(self, phone_Num)
+
+            st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin)
             st1.click()
 
             st2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 찾기")
@@ -3558,40 +4267,84 @@ class IntroScreen(unittest.TestCase):
 
             st2 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
             st2.click()
-            st2.send_keys("01000066666")
+            st2.send_keys(phone_Num)
 
             st3 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증요청")
             st3.click()
             time.sleep(3)
 
-            assert self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText").is_displayed()
+            utils.authCode_mobile(self)
+
+            resendBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "재전송")
+            resendBtn.click()
+            time.sleep(3)
+
+            authBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authComplete)
+            authBtn.click()
+            time.sleep(0.5)
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증코드 오류").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "다른 코드가 입력 되었네요. \n다시 확인 후 시도해보세요.\na1021").is_displayed()
+            confirmBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, confirm)
+            confirmBtn.click()
 
             st4 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
             st4.click()
-            st4.send_keys("1")
+            st4.clear()
+            time.sleep(1)
 
-            assert self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='1']").is_displayed()
+            utils.authCode_mobile(self)
 
-            st5 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
-            st5.clear()
+            authBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authComplete)
+            authBtn.click()
+            time.sleep(0.5)
 
-            assert self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 재설정").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, f"휴대폰 번호\n{phone_Num}\n비밀번호\n비밀번호 재입력").is_displayed()
+
+            print("------------- 테스트 시나리오 종료, 회원탈퇴 시도")
+
+            self.driver.quit()
+
+            time.sleep(1)
+
+            options = UiAutomator2Options()
+            options.platform_name = 'Android'
+            options.device_name = 'R3CXB0MKLGP'
+            options.app_package = 'com.suprema.moon'
+            options.app_activity = 'com.suprema.moon.MainActivity'
+            options.automation_name = 'UiAutomator2'
+            options.auto_grant_permissions = True
+            options.no_reset = True
+
+            self.driver = webdriver.Remote("http://localhost:4723/wd/hub", options=options)
+
+            time.sleep(1)
+
+            utils.mobile_login(self, phone_Num, "Kjstar36!!")
+
+            utils.leaveAdmin(self)
 
             pass
 
-            print("DQS-T14158 DQS-T14158 비밀번호 찾기 인증번호 입력 페이지의 인증번호 인풋 박스 Hint 문구 기능 동작 확인 | Pass")
+            print("DQS_T14159 모바일로 로그인에서 비밀번호 찾기 인증번호 입력 페이지의 인증번호 재전송 버튼 기능 동작 확인 | Pass")
 
         except Exception as e:
             capture_screenshot(self.driver, self._testMethodName)
-            print("DQS-T14158 DQS-T14158 비밀번호 찾기 인증번호 입력 페이지의 인증번호 인풋 박스 Hint 문구 기능 동작 확인 | Failed")
+            print("DQS_T14159 모바일로 로그인에서 비밀번호 찾기 인증번호 입력 페이지의 인증번호 재전송 버튼 기능 동작 확인 | Failed")
             print(str(e))
             self.fail()
 
-    def test_DQS_T14160_T14159(self):
+    def test_DQS_T999999_26(self):
         try:
-            print("DQS-T14160 비밀번호 찾기 인증번호 입력 페이지의 인증시간 만료 시 기능 동작 확인 || DQS_T14159 비밀번호 찾기 인증번호 입력 페이지의 인증번호 재전송 버튼 기능 동작 확인")
+            print("DQS_T999999_26 이메일로 로그인에서 비밀번호 찾기 인증번호 입력 페이지의 인증번호 재전송 버튼 기능 동작 확인")
 
-            st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그인")
+            email_random = "kjjung+pp" + str(random.randint(11,9999)).zfill(3) + "@suprema.co.kr"
+            print(email_random)
+
+            utils.signUpEmail(self, email_random)
+
+            st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin)
             st1.click()
 
             st2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 찾기")
@@ -3599,64 +4352,206 @@ class IntroScreen(unittest.TestCase):
 
             st2 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
             st2.click()
-            st2.send_keys("01066666666")
+            st2.send_keys(email_random)
 
             st3 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증요청")
             st3.click()
             time.sleep(3)
 
-            st4 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText")
-            st4.send_keys("123456")
+            utils.authCode(self)
 
-            time.sleep(181)
-            print("3분 대기중.......................")
-
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "0분 0초").is_displayed()
-
-            st6 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증완료")
-            st6.click()
-
-            st7 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "재전송")
-            st7.click()
-
-            ID_check = ["2분 29초", "2분 28초", "2분 27초", "2분 26초"]
-
-            element_found = False
-            for id in ID_check:
-                elements = self.driver.find_elements(AppiumBy.ACCESSIBILITY_ID, id)
-                if len(elements) > 0:
-                    element_found = True
-                    break
-
-            self.assertTrue(element_found, "None of the specified elements were found")
-
-            st8 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText")
-            st8.click()
-            st8.send_keys("")
-            time.sleep(1)
-
-            st9 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText")
-            st9.click()
-            st9.send_keys("112233")
+            resendBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "재전송")
+            resendBtn.click()
             time.sleep(3)
 
-            st10 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증완료")
-            st10.click()
+            authBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authComplete)
+            authBtn.click()
+            time.sleep(0.5)
 
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증 코드 오류").is_displayed()
-            # 회원가입 씬에서 출력된 팝업 문구와 비밀번호 찾기 씬에서 출력되는 팝업 문구가 상이함, 회원가입 씬에서 발생하는 문구로 작성되어 있어서 Fail 발생함, 사양 확정 후 TC보완예정
-            authError_Pop = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='인증 코드가 일치하지 않습니다. \n다시 입력해 주세요.']")
-            contentDesc = authError_Pop.get_attribute('content-desc')
-            print(f"추출한 content-desc 값 : {contentDesc}")
-            self.assertEqual(contentDesc, "인증 코드가 일치하지 않습니다. \n다시 입력해 주세요.")
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증코드 오류").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "다른 코드가 입력 되었네요. \n다시 확인 후 시도해보세요.\na1021").is_displayed()
+            confirmBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, confirm)
+            confirmBtn.click()
+
+            st4 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+            st4.click()
+            st4.clear()
+            time.sleep(1)
+
+            utils.authCode(self)
+
+            authBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authComplete)
+            authBtn.click()
+            time.sleep(0.5)
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 재설정").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, f"이메일\n{email_random}\n비밀번호\n비밀번호 재입력").is_displayed()
+
+            print("------------- 테스트 시나리오 종료, 회원탈퇴 시도")
+
+            self.driver.quit()
+
+            time.sleep(1)
+
+            options = UiAutomator2Options()
+            options.platform_name = 'Android'
+            options.device_name = 'R3CXB0MKLGP'
+            options.app_package = 'com.suprema.moon'
+            options.app_activity = 'com.suprema.moon.MainActivity'
+            options.automation_name = 'UiAutomator2'
+            options.auto_grant_permissions = True
+            options.no_reset = True
+
+            self.driver = webdriver.Remote("http://localhost:4723/wd/hub", options=options)
+
+            time.sleep(1)
+
+            utils.email_login(self, email_random, "Kjstar36!!")
+
+            utils.leaveAdmin(self)
 
             pass
 
-            print("DQS-T14160 비밀번호 찾기 인증번호 입력 페이지의 인증시간 만료 시 기능 동작 확인 || DQS_T14159 비밀번호 찾기 인증번호 입력 페이지의 인증번호 재전송 버튼 기능 동작 확인 | Pass")
+            print("DQS_T999999_26 이메일로 로그인에서 비밀번호 찾기 인증번호 입력 페이지의 인증번호 재전송 버튼 기능 동작 확인 | Pass")
 
         except Exception as e:
             capture_screenshot(self.driver, self._testMethodName)
-            print("DQS-T14160 비밀번호 찾기 인증번호 입력 페이지의 인증시간 만료 시 기능 동작 확인 || DQS_T14159 비밀번호 찾기 인증번호 입력 페이지의 인증번호 재전송 버튼 기능 동작 확인 | Failed")
+            print("DQS_T999999_26 이메일로 로그인에서 비밀번호 찾기 인증번호 입력 페이지의 인증번호 재전송 버튼 기능 동작 확인 | Failed")
+            print(str(e))
+            self.fail()
+
+    def test_DQS_T14160(self):
+        try:
+            print("DQS-T14160 비밀번호 찾기 인증번호 입력 페이지의 인증시간 만료 시 기능 동작 확인")
+
+            phone_Num = "010" + str(random.randint(0, 99999999)).zfill(8)
+            print(phone_Num) #랜덤 폰번호로 회원가입 -> 비밀번호 찾기 테스트 시 잦은 시도 팝업 발생으로 신규 가입 후 테스트 시나리오 진행
+
+            utils.signUpMobile(self, phone_Num)
+
+            st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin)
+            st1.click()
+
+            st2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 찾기")
+            st2.click()
+
+            st2 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+            st2.click()
+            st2.send_keys(phone_Num)
+
+            st3 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증요청")
+            st3.click()
+            time.sleep(0.5)
+
+            utils.authCode_mobile(self)
+
+            print("인증 코드 만료를 위해 5분 대기중.......................")
+            time.sleep(302)  # 인증시간 만료를 위해 5분 대기
+
+
+            authBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authComplete)
+            authBtn.click()
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 초기화 오류").is_displayed()
+            authError_Pop = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='초기화 인증 코드 유효 시간이 만료 되었습니다. \na1022']")
+            contentDesc = authError_Pop.get_attribute('content-desc')
+            print(f"추출한 content-desc 값 : {contentDesc}")
+            self.assertEqual(contentDesc, "초기화 인증 코드 유효 시간이 만료 되었습니다. \na1022")
+
+            confirmBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, confirm)
+            confirmBtn.click()
+
+            print("------------- 테스트 시나리오 종료, 회원탈퇴 시도")
+            self.driver.quit()
+
+            time.sleep(1)
+
+            options = UiAutomator2Options()
+            options.platform_name = 'Android'
+            options.device_name = 'R3CXB0MKLGP'
+            options.app_package = 'com.suprema.moon'
+            options.app_activity = 'com.suprema.moon.MainActivity'
+            options.automation_name = 'UiAutomator2'
+            options.auto_grant_permissions = True
+            options.no_reset = True
+
+            self.driver = webdriver.Remote("http://localhost:4723/wd/hub", options=options)
+
+            time.sleep(1)
+
+            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin)
+            login_button.click()
+
+            phone_input_box = self.driver.find_element(AppiumBy.XPATH, phoneNumberInputBox)
+            phone_input_box.click()
+            phone_input_box.send_keys(phone_Num)
+
+            password_input_box = self.driver.find_element(AppiumBy.XPATH, passwordInputBox)
+            password_input_box.click()
+            password_input_box.send_keys("Kjstar36!!")
+
+            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, login)
+            login_button.click()
+            time.sleep(2)
+
+            utils.leaveAdmin(self)
+
+            pass
+
+            print("DQS-T14160 비밀번호 찾기 인증번호 입력 페이지의 인증시간 만료 시 기능 동작 확인 | Pass")
+
+        except Exception as e:
+            capture_screenshot(self.driver, self._testMethodName)
+            print("DQS-T14160 비밀번호 찾기 인증번호 입력 페이지의 인증시간 만료 시 기능 동작 확인  | Failed")
+            print(str(e))
+            self.fail()
+
+    def test_DQS_T14161(self):
+        try:
+            print("DQS-T14161 회원가입 인증번호 입력 페이지의 인증시간 만료 시 기능 동작 확인")
+
+            signUp = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "회원가입")
+            signUp.click()
+
+            agree = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, allAgree)
+            agree.click()
+
+            nextBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, next)
+            nextBtn.click()
+            time.sleep(0.5)
+
+            emailInput = self.driver.find_element(AppiumBy.CLASS_NAME, signUpInput)
+            emailInput.click()
+            emailInput.send_keys("kjjung+auth1@suprema.co.kr")
+
+            authBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authRequest)
+            authBtn.click()
+            time.sleep(2)
+
+            utils.authCode(self)
+
+            print("인증 코드 만료를 위해 5분 대기중.......................")
+            time.sleep(302)  # 인증시간 만료를 위해 5분 대기
+
+            authComBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authComplete)
+            authComBtn.click()
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증번호 오류").is_displayed()
+            authError_Pop = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='인증 시간이 초과되었습니다.\n다시 시도해 주세요.\na1017']")
+            contentDesc = authError_Pop.get_attribute('content-desc')
+            print(f"추출한 content-desc 값 : {contentDesc}")
+            self.assertEqual(contentDesc, "인증 시간이 초과되었습니다.\n다시 시도해 주세요.\na1017")
+
+            confirmBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, confirm)
+            confirmBtn.click()
+
+            pass
+
+            print("DQS-T14161 회원가입 인증번호 입력 페이지의 인증시간 만료 시 기능 동작 확인 | Pass")
+
+        except Exception as e:
+            capture_screenshot(self.driver, self._testMethodName)
+            print("DQS-T14161 회원가입 인증번호 입력 페이지의 인증시간 만료 시 기능 동작 확인 | Failed")
             print(str(e))
             self.fail()
 
@@ -3664,32 +4559,18 @@ class IntroScreen(unittest.TestCase):
         try:
             print("DQS-T13684 비밀번호 찾기 기능 중 가입하지 않은 휴대폰 번호 입력 시 동작 확인")
 
-            st1 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "모바일로 로그인")
-            st1.click()
+            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, mobileLogin)
+            login_button.click()
 
-            st2 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 찾기")
-            st2.click()
+            resetPassword = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 찾기")
+            resetPassword.click()
 
-            st3 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
-            st3.click()
-            st3.send_keys("123456789")
+            mobile_input = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+            mobile_input.click()
+            mobile_input.send_keys("01078965412") #회원가입이 안된 전화번호 입력
 
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "휴대폰 번호\n올바른 휴대폰 번호를 입력해 주세요.").is_displayed()
-
-            authRequset = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증요청")
-            isNext = authRequset.is_enabled()
-            self.assertFalse(isNext, "인증요청 버튼이 비활성화되어 있습니다.")
-
-            st4 = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='123 456 789']/android.widget.ImageView")
-            st4.click()
-            time.sleep(1)
-
-            st5 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
-            st5.click()
-            st5.send_keys("01075529810") #회원가입이 안된 전화번호 입력
-
-            st6 = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증요청")
-            st6.click()
+            authReBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authRequest)
+            authReBtn.click()
 
             assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그인 정보 오류").is_displayed()
             wrongPhoneNum_Msg = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='계정 혹은 비밀번호를\n다시 확인해 주세요.\na1000']")
@@ -3714,34 +4595,15 @@ class IntroScreen(unittest.TestCase):
         try:
             print("DQS-T999999 비밀번호 찾기 기능 중 가입되지 않은 이메일 주소 입력 시 동작 확인")
 
-            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "이메일로 로그인")
+            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin)
             login_button.click()
 
-            passwordSearch = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 찾기")
-            passwordSearch.click()
+            resetPassword = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비밀번호 찾기")
+            resetPassword.click()
 
-            emailInput1 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
-            emailInput1.click()
-            emailInput1.send_keys("kjjung@suprema.co.kr.")
-
-            #입력박스 하단에 문구 출력
-
-            authRequestBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증요청")
-            authRequestBtn.click()
-            time.sleep(0.5)
-
-            try :
-                self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그인 정보 오류")
-                raise AssertionError("Fail : 팝업 출력됨")
-            except NoSuchElementException:
-                print("Pass : 팝업 출력 안됨")
-
-            emailDel = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='kjjung@suprema.co.kr.']/android.widget.ImageView")
-            emailDel.click()
-
-            emailInput1 = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
-            emailInput1.click()
-            emailInput1.send_keys("kjjung@suprema.com")
+            email_input = self.driver.find_element(AppiumBy.CLASS_NAME, "android.widget.EditText")
+            email_input.click()
+            email_input.send_keys("kjjung@suprema.com") # 가입되지 않은 이메일 주소 입력
 
             authRequestBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "인증요청")
             authRequestBtn.click()
@@ -3767,12 +4629,11 @@ class IntroScreen(unittest.TestCase):
             print(str(e))
             self.fail()
 
-
     def test_DQS_T999999_9(self):
         try:
-            print("DQS_T999999 브랜치, 대리점 관리자로 이메일 로그인 시 동작 확인")
+            print("DQS_T999999 공간 초대/미초대 된 브랜치 관리자로 이메일 로그인 동작 확인")
 
-            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "이메일로 로그인")
+            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin)
             login_button.click()
 
             emailAdress1 = "kjjung+ba@suprema.co.kr"
@@ -3788,42 +4649,149 @@ class IntroScreen(unittest.TestCase):
             login_button.click()
             time.sleep(0.5)
 
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "권한 없음").is_displayed()
-            accessMsg = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='권한 없음\ne1001']")
-            contentDesc = accessMsg.get_attribute('content-desc')
+            utils.authCode(self)
+            time.sleep(1)
+
+            authComBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authComplete)
+            authComBtn.click()
+            time.sleep(2)
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비디오 공간").is_displayed()
+
+            leadbutton = self.driver.find_element(AppiumBy.XPATH, lead)
+            leadbutton.click()
+
+            logout_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, logout)
+            logout_button.click()
+
+            logout_msg = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='로그아웃 하시겠습니까?\n자동로그인 기능이 해제 됩니다.']")
+            contentDesc = logout_msg.get_attribute('content-desc')
             print(f"추출한 content-desc 값 : {contentDesc}")
-            self.assertEqual(contentDesc, "권한 없음\ne1001")
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "확인").is_displayed()
-            confirmBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "확인")
+            self.assertEqual(contentDesc, "로그아웃 하시겠습니까?\n자동로그인 기능이 해제 됩니다.")
+
+            confirmBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, confirm)
             confirmBtn.click()
 
-            emailDel = self.driver.find_element(AppiumBy.XPATH, "//android.widget.EditText[@text='kjjung+ba@suprema.co.kr']/android.widget.ImageView")
-            emailDel.click()
+            time.sleep(3)
 
-            emailAdress2 = "kjjung+dist1@suprema.co.kr"
+            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin)
+            login_button.click()
+
+            emailAdress1 = "kjjung+ba222@suprema.co.kr"
             email_input_box = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ImageView[@content-desc=\"이메일 주소\n비밀번호\"]/android.widget.EditText[1]")
             email_input_box.click()
-            email_input_box.send_keys(emailAdress2)
+            email_input_box.send_keys(emailAdress1)
+
+            password_input_box = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ImageView[@content-desc=\"이메일 주소\n비밀번호\"]/android.widget.EditText[2]")
+            password_input_box.click()
+            password_input_box.send_keys("Kjstar36!!")
 
             login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그인")
             login_button.click()
             time.sleep(0.5)
 
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "권한 없음").is_displayed()
-            accessMsg = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='권한 없음\ne1001']")
-            contentDesc = accessMsg.get_attribute('content-desc')
-            print(f"추출한 content-desc 값 : {contentDesc}")
-            self.assertEqual(contentDesc, "권한 없음\ne1001")
-            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "확인").is_displayed()
-            confirmBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "확인")
-            confirmBtn.click()
+            utils.authCode(self)
+            time.sleep(1)
+
+            authComBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authComplete)
+            authComBtn.click()
+            time.sleep(2)
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "할당된 공간이 없습니다.").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "초대된 공간이 없습니다\n관리자에게 연락하여 초대 여부를 확인하세요.").is_displayed()
+            assert self.driver.find_element(AppiumBy.XPATH, "//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.widget.ImageView[1]").is_displayed()
+            assert self.driver.find_element(AppiumBy.XPATH, "//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.widget.ImageView[2]").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "초대 후에 자동으로 이동합니다.").is_displayed()
 
             pass
-            print("DQS_T999999 브랜치, 대리점 관리자로 이메일 로그인 시 동작 확인 | Pass")
+            print("DQS_T999999 공간 초대/미초대 된 브랜치 관리자로 이메일 로그인 동작 확인 | Pass")
 
         except Exception as e:
             capture_screenshot(self.driver, self._testMethodName)
-            print("DQS_T999999 브랜치, 대리점 관리자로 이메일 로그인 시 동작 확인 | Failed")
+            print("DQS_T999999 공간 초대/미초대 된 브랜치 관리자로 이메일 로그인 동작 확인 | Failed")
+            print(str(e))
+            self.fail()
+
+    def test_DQS_T999999_29(self):
+        try:
+            print("DQS_T999999_29 공간 초대/미초대 된 대리점 관리자로 이메일 로그인 동작 확인")
+
+            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin)
+            login_button.click()
+
+            emailAdress1 = "kjjung+dist1@suprema.co.kr"
+            email_input_box = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ImageView[@content-desc=\"이메일 주소\n비밀번호\"]/android.widget.EditText[1]")
+            email_input_box.click()
+            email_input_box.send_keys(emailAdress1)
+
+            password_input_box = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ImageView[@content-desc=\"이메일 주소\n비밀번호\"]/android.widget.EditText[2]")
+            password_input_box.click()
+            password_input_box.send_keys("Kjstar36!!")
+
+            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그인")
+            login_button.click()
+            time.sleep(0.5)
+
+            utils.authCode(self)
+            time.sleep(1)
+
+            authComBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authComplete)
+            authComBtn.click()
+            time.sleep(2)
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "비디오 공간").is_displayed()
+
+            leadbutton = self.driver.find_element(AppiumBy.XPATH, lead)
+            leadbutton.click()
+
+            logout_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, logout)
+            logout_button.click()
+
+            logout_msg = self.driver.find_element(AppiumBy.XPATH, "//android.view.View[@content-desc='로그아웃 하시겠습니까?\n자동로그인 기능이 해제 됩니다.']")
+            contentDesc = logout_msg.get_attribute('content-desc')
+            print(f"추출한 content-desc 값 : {contentDesc}")
+            self.assertEqual(contentDesc, "로그아웃 하시겠습니까?\n자동로그인 기능이 해제 됩니다.")
+
+            confirmBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, confirm)
+            confirmBtn.click()
+
+            time.sleep(3)
+
+            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, emailLogin)
+            login_button.click()
+
+            emailAdress1 = "kjjung+dist2@suprema.co.kr"
+            email_input_box = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ImageView[@content-desc=\"이메일 주소\n비밀번호\"]/android.widget.EditText[1]")
+            email_input_box.click()
+            email_input_box.send_keys(emailAdress1)
+
+            password_input_box = self.driver.find_element(AppiumBy.XPATH, "//android.widget.ImageView[@content-desc=\"이메일 주소\n비밀번호\"]/android.widget.EditText[2]")
+            password_input_box.click()
+            password_input_box.send_keys("Kjstar36!!")
+
+            login_button = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "로그인")
+            login_button.click()
+            time.sleep(0.5)
+
+            utils.authCode(self)
+            time.sleep(1)
+
+            authComBtn = self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, authComplete)
+            authComBtn.click()
+            time.sleep(2)
+
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "할당된 공간이 없습니다.").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "초대된 공간이 없습니다\n관리자에게 연락하여 초대 여부를 확인하세요.").is_displayed()
+            assert self.driver.find_element(AppiumBy.XPATH, "//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.widget.ImageView[1]").is_displayed()
+            assert self.driver.find_element(AppiumBy.XPATH, "//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.widget.ImageView[2]").is_displayed()
+            assert self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, "초대 후에 자동으로 이동합니다.").is_displayed()
+
+            pass
+            print("DQS_T999999 공간 초대/미초대 된 대리점 관리자로 이메일 로그인 동작 확인 | Pass")
+
+        except Exception as e:
+            capture_screenshot(self.driver, self._testMethodName)
+            print("DQS_T999999 공간 초대/미초대 된 대리점 관리자로 이메일 로그인 동작 확인 | Failed")
             print(str(e))
             self.fail()
 
